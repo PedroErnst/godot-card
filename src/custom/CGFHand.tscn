@@ -10,15 +10,27 @@ font_data = ExtResource( 2 )
 [node name="Hand" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 placement = 7
+overlap_shift_direction = null
+index_shift_priority = null
+card_size = null
+show_manipulation_buttons = null
 excess_discard_pile_name = "discard"
+hand_size = null
 excess_cards = 2
 
-[node name="DiscardRandom" type="Button" parent="Control/ManipulationButtons" index="2" groups=[
-"manipulation_button",
-]]
+[node name="DiscardRandom" type="Button" parent="Control/ManipulationButtons" index="2" groups=["manipulation_button"]]
 margin_left = 28.0
 margin_right = 52.0
 margin_bottom = 26.0
 mouse_filter = 1
 custom_fonts/font = SubResource( 1 )
 text = "R"
+
+[node name="Counters" parent="." index="3"]
+visible = false
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Cards" parent="Counters" index="0"]
+visible = false
