@@ -48,7 +48,7 @@ const CARD_SIZE := Vector2(150,240)
 # based on the percentage of difference between the two resolutions in absolute pixel number.
 const DESIGN_RESOLUTION := Vector2(1280,720)
 # Switch this off to disable fancy movement of cards during draw/discard
-const FANCY_MOVEMENT := true
+const FANCY_MOVEMENT := false
 # The focus style selected for this game. See enum `FocusStyle`
 const FOCUS_STYLE = CFInt.FocusStyle.BOTH
 # Controls how the card will be magnified in the focus viewport.
@@ -71,7 +71,7 @@ const VIEWPORT_FOCUS_ZOOM_TYPE = "resize"
 #
 # If you allow the player to modify this with cfc.set_settings()
 # Then that will always take priority
-const HAND_USE_OVAL_SHAPE := true
+const HAND_USE_OVAL_SHAPE := false
 # The below scales down cards down while being dragged.
 #
 # if you don't want this behaviour, change it to Vector2(1,1)
@@ -128,10 +128,10 @@ const PATH_MOUSE_POINTER := PATH_CORE + "MousePointer.tscn"
 # The amount of distance neighboring cards are pushed during card focus
 #
 # It's based on the card width. Bigger percentage means larger push.
-const NEIGHBOUR_PUSH := 0.75
+const NEIGHBOUR_PUSH := 0.25
 # The scale of a card while on the play area
 # You can adjust this for each different card type
-const PLAY_AREA_SCALE := 0.8
+const PLAY_AREA_SCALE := 0.5
 # The default scale of a card while on a thumbnail area such as the deckbuilder
 # You can adjust this for each different card type
 const THUMBNAIL_SCALE := 0.85
