@@ -41,7 +41,7 @@ export(CFInt.IndexShiftPriority) var index_shift_priority
 export var card_size := CFConst.CARD_SIZE
 # If set to false, no manipulation buttons will appear when hovering
 # over this container.
-export var show_manipulation_buttons := true
+export var show_manipulation_buttons := false
 
 # Used for debugging
 var _debugger_hook := false
