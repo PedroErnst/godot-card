@@ -81,51 +81,21 @@ func _on_Debug_toggled(button_pressed: bool) -> void:
 
 # Loads a sample set of cards to use for testing
 func load_test_cards(gut := true) -> void:
-	var extras = 11
-	# Hardcoded the card order because for some reason, GUT on low-powered VMs
-	# ends up with a different card order, even when the seed is the same.
-	var gut_cards := [
-		"Multiple Choices Test Card",
-		"Test Card 2",
-		"Test Card 3",
-		"Test Card 2",
-		"Test Card 2",
-		"Test Card 1",
-		"Test Card 2",
-		"Multiple Choices Test Card",
-		"Test Card 3",
-		"Multiple Choices Test Card",
-		"Multiple Choices Test Card",
-		"Rich Text Card",
-		"Shaking Card",
-		"Test Card 1",
-		"Test Card 2",
-		"Test Card 3",
-		"Multiple Choices Test Card",
-	]
+	var initial_cards := {
+		"Grassland" : 6,
+		"Hills" : 4,
+	}
+	
 	var test_card_array := []
-	if gut:
-		for card in gut_cards:
-			test_card_array.append(cfc.instance_card(card))
-	else:
-		var test_cards := []
-		for ckey in cfc.card_definitions.keys():
-			if ckey != "Spawn Card":
-				test_cards.append(ckey)
-		for _i in range(extras):
-			if not test_cards.empty():
-				var random_card_name = \
-						test_cards[CFUtils.randi() % len(test_cards)]
-				test_card_array.append(cfc.instance_card(random_card_name))
-		# 11 is the cards GUT expects. It's the testing standard
-		if extras == 11:
-		# I ensure there's of each test card, for use in GUT
-			for card_name in test_cards:
-				test_card_array.append(cfc.instance_card(card_name))
-	for card in test_card_array:
-		cfc.NMAP.deck.add_child(card)
-		#card.set_is_faceup(false,true)
-		card._determine_idle_state()
+	
+	for i in initial_cards:
+		var count =  initial_cards[i]
+		for n in count:
+			var card = cfc.instance_card(i)
+			cfc.NMAP.deck.add_child(card)
+			card._determine_idle_state()
+	
+	cfc.NMAP.deck.shuffle_cards(false)
 
 func _on_DeckBuilder_pressed() -> void:
 	cfc.game_paused = true
