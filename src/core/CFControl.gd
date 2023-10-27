@@ -234,6 +234,7 @@ func restore_rng_state() -> void:
 func instance_card(card_name: String) -> Card:
 	# We discover the template from the "Type"  property defined
 	# in each card. Any property can be used
+	var name = CFConst.PATH_CARDS + card_definitions[card_name][CardConfig.SCENE_PROPERTY] + ".tscn"
 	var template = load(CFConst.PATH_CARDS
 			+ card_definitions[card_name][CardConfig.SCENE_PROPERTY] + ".tscn")
 	var card = template.instance()

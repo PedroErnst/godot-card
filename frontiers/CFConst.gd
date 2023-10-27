@@ -87,7 +87,7 @@ const DECKS_PATH := "user://Decks/"
 const PATH_CORE := "res://src/core/"
 # The path where scenes and scripts customized for this specific game exist
 # (e.g. board, card back etc)
-const PATH_CUSTOM := "res://src/custom/"
+const PATH_CUSTOM := "res://frontiers/"
 # The path where card template scenes exist.
 # These is usually one scene per type of card in the game
 const PATH_CARDS := PATH_CUSTOM + "cards/"
