@@ -5,3 +5,8 @@
 
 [node name="Card" instance=ExtResource( 1 )]
 card_front_design = ExtResource( 2 )
+
+[node name="Control" parent="." index="1"]
+__meta__ = {
+"_edit_group_": true
+}

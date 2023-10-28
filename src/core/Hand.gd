@@ -77,6 +77,23 @@ func get_leftmost_card() -> Card:
 	return(get_first_card())
 
 
+func discardHand() -> void:
+	for card in get_all_cards():
+		card.move_to(cfc.NMAP.discard)
+
+
+func drawFromDeck(amount: int = 1) -> void:
+	for i in amount:
+		if (cfc.NMAP.deck.get_card_count() < 1):
+			shuffleDiscardIntoDrawDeck()
+			yield(cfc.NMAP.deck, "shuffle_completed")
+		draw_card(cfc.NMAP.deck)
+		
+func shuffleDiscardIntoDrawDeck() -> void:
+	for card in cfc.NMAP.discard.get_all_cards():
+		card.move_to(cfc.NMAP.deck)
+	cfc.NMAP.deck.shuffle_cards()
+
 # Visibly shuffles all cards in hand
 func shuffle_cards() -> void:
 	# When shuffling the hand, we also want to show the player

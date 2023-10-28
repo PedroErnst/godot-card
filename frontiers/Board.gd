@@ -17,11 +17,19 @@ func _ready() -> void:
 		$SeedLabel.text = "Game Seed is: " + cfc.game_rng_seed
 	if not get_tree().get_root().has_node('Gut'):
 		load_test_cards(false)
-	for i in 5:
-		cfc.NMAP.hand.draw_card(cfc.NMAP.deck)
+	
+	startTurn()
 	# warning-ignore:return_value_discarded
 	$DeckBuilderPopup.connect('popup_hide', self, '_on_DeckBuilder_hide')
 
+func endTurn() -> void:
+	cfc.NMAP.hand.discardHand()
+	startTurn()
+	$Counters.mod_counter("credits", 3, true)
+
+
+func startTurn() -> void:
+	cfc.NMAP.hand.drawFromDeck(5)
 
 
 # This function is to avoid relating the logic in the card objects

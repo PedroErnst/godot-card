@@ -207,9 +207,6 @@ margin_top = 140.334
 margin_right = 200.899
 margin_bottom = 160.334
 text = "Reshuffle all cards into discard"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="OvalHandToggle" type="CheckButton" parent="."]
 margin_left = 405.31

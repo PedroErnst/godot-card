@@ -382,7 +382,7 @@ func shuffle_cards(animate = true) -> void:
 			style = shuffle_style
 		if style == CFConst.ShuffleStyle.CORGI:
 			_add_tween_position(position,shuffle_position,0.2)
-			_add_tween_rotation(rotation_degrees,shuffle_rotation,0.2)
+		#	_add_tween_rotation(rotation_degrees,shuffle_rotation,0.2)
 			_tween.start()
 			# We move the pile to a more central location to see the anim
 			yield(_tween, "tween_all_completed")
@@ -407,7 +407,7 @@ func shuffle_cards(animate = true) -> void:
 			yield(get_tree().create_timer(anim_speed * 2.5), "timeout")
 		elif style == CFConst.ShuffleStyle.SPLASH:
 			_add_tween_position(position,shuffle_position,0.2)
-			_add_tween_rotation(rotation_degrees,shuffle_rotation,0.2)
+	#		_add_tween_rotation(rotation_degrees,shuffle_rotation,0.2)
 			_tween.start()
 			yield(_tween, "tween_all_completed")
 			# The animation speeds have been empirically tested to look good
@@ -424,7 +424,7 @@ func shuffle_cards(animate = true) -> void:
 			yield(get_tree().create_timer(anim_speed + 0.6), "timeout")
 		elif style == CFConst.ShuffleStyle.SNAP:
 			_add_tween_position(position,shuffle_position,0.2)
-			_add_tween_rotation(rotation_degrees,shuffle_rotation,0.2)
+#			_add_tween_rotation(rotation_degrees,shuffle_rotation,0.2)
 			_tween.start()
 			yield(_tween, "tween_all_completed")
 			anim_speed = 0.2
@@ -452,7 +452,7 @@ func shuffle_cards(animate = true) -> void:
 				reorganize_stack()
 		if position != init_position:
 			_add_tween_position(position,init_position,0.2)
-			_add_tween_rotation(rotation_degrees,0,0.2)
+	#		_add_tween_rotation(rotation_degrees,0,0.2)
 			_tween.start()
 		z_index = 0
 	else:

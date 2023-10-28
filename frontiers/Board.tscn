@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://frontiers/Deck.gd" type="Script" id=1]
 [ext_resource path="res://src/core/Pile.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://themes/darktheme/darktheme.theme" type="Theme" id=12]
 [ext_resource path="res://frontiers/resource/gfx/wesnoth/wesnoth1.png" type="Texture" id=13]
 [ext_resource path="res://frontiers/resource/gfx/wesnoth/wesnoth-buildings.png" type="Texture" id=14]
+[ext_resource path="res://frontiers/EndTurn.gd" type="Script" id=15]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -92,7 +93,6 @@ index_shift_priority = null
 card_size = null
 show_manipulation_buttons = null
 pile_name = null
-shuffle_style = null
 faceup_cards = null
 sorted_popup = null
 
@@ -219,7 +219,12 @@ margin_bottom = 75.0
 [node name="Hand" parent="." instance=ExtResource( 3 )]
 position = Vector2( 155, 480 )
 script = ExtResource( 4 )
+overlap_shift_direction = 0
+index_shift_priority = 0
+card_size = Vector2( 150, 240 )
+show_manipulation_buttons = false
 excess_discard_pile_name = ""
+hand_size = 10
 excess_cards = 0
 
 [node name="Counters" parent="." instance=ExtResource( 6 )]
@@ -268,6 +273,16 @@ cell_custom_transform = Transform2D( 64, 0, 50, 64, 0, 0 )
 cell_half_offset = 1
 format = 1
 tile_data = PoolIntArray( 131083, 0, 458755 )
+
+[node name="EndTurn" type="Button" parent="."]
+margin_left = 1189.0
+margin_top = 439.0
+margin_right = 1265.0
+margin_bottom = 466.0
+text = "End Turn"
+script = ExtResource( 15 )
+
+[connection signal="button_down" from="EndTurn" to="EndTurn" method="_on_EndTurn_button_down"]
 
 [editable path="Deck"]
 [editable path="Discard"]
