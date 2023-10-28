@@ -148,14 +148,14 @@ export var targeting_arrow_scene = _TARGETING_SCENE
 # piles
 # Be careful with this setting, as it will allow the player to drop cards
 # on top of the hand or pile areas.
-export var disable_dropping_to_cardcontainers := false
+export var disable_dropping_to_cardcontainers := true
 # If true, the player will not be able to drag cards out of the hand manually
-export var disable_dragging_from_hand := false
+export var disable_dragging_from_hand := true
 # If true, the player will not be able to drag cards around the board manually
-export var disable_dragging_from_board := false
+export var disable_dragging_from_board := true
 # If true, the player will not be able to drag cards out of piles
 # (Either directly from top, or from popup window
-export var disable_dragging_from_pile := false
+export var disable_dragging_from_pile := true
 # If true, and the player attempt to drag the card out of hand
 #	then the card will be check on whether it has scripts
 #	which are [targeting other cards](SP#KEY_SUBJECT_V_TARGET) and if so

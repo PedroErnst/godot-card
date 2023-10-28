@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://frontiers/Deck.gd" type="Script" id=1]
 [ext_resource path="res://src/core/Pile.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://src/custom/CGFDeckbuilder/CGFDeckBuilder.tscn" type="PackedScene" id=10]
 [ext_resource path="res://frontiers/Discard.gd" type="Script" id=11]
 [ext_resource path="res://themes/darktheme/darktheme.theme" type="Theme" id=12]
+[ext_resource path="res://frontiers/resource/gfx/wesnoth/wesnoth1.png" type="Texture" id=13]
+[ext_resource path="res://frontiers/resource/gfx/wesnoth/wesnoth-buildings.png" type="Texture" id=14]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -29,6 +31,50 @@ font_data = ExtResource( 9 )
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.145098, 0.145098, 0.145098, 1 )
+
+[sub_resource type="TileSet" id=4]
+0/name = "wesnoth1.png 0"
+0/texture = ExtResource( 13 )
+0/tex_offset = Vector2( -10, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 504, 1080 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 72, 72 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "wesnoth-buildings.png 1"
+1/texture = ExtResource( 14 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 72, 72 )
+1/tile_mode = 2
+1/autotile/icon_coordinate = Vector2( 0, 0 )
+1/autotile/tile_size = Vector2( 72, 72 )
+1/autotile/spacing = 0
+1/autotile/occluder_map = [  ]
+1/autotile/navpoly_map = [  ]
+1/autotile/priority_map = [  ]
+1/autotile/z_index_map = [  ]
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
 
 [node name="Board" type="Control"]
 anchor_right = 1.0
@@ -181,6 +227,7 @@ margin_top = 205.0
 margin_bottom = 219.0
 
 [node name="PlacementGridDemo" parent="." instance=ExtResource( 7 )]
+visible = false
 margin_left = 775.0
 margin_top = 240.0
 margin_right = 1274.0
@@ -188,6 +235,7 @@ margin_bottom = 436.0
 highlight = Color( 0.985156, 0, 1.3, 1.3 )
 
 [node name="ModifiedLabelGrid" parent="." instance=ExtResource( 8 )]
+visible = false
 margin_left = 1015.0
 margin_top = 30.0
 margin_right = 1264.0
@@ -200,9 +248,6 @@ margin_right = 265.0
 margin_bottom = 200.0
 custom_fonts/font = SubResource( 2 )
 text = "Game Seed is: "
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="DeckBuilderPopup" type="PopupPanel" parent="."]
 margin_right = 1000.0
@@ -215,6 +260,14 @@ margin_top = 2.0
 margin_right = -2.0
 margin_bottom = -2.0
 custom_styles/panel = SubResource( 3 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 4 )
+cell_size = Vector2( 54, 72 )
+cell_custom_transform = Transform2D( 64, 0, 50, 64, 0, 0 )
+cell_half_offset = 1
+format = 1
+tile_data = PoolIntArray( 131083, 0, 458755 )
 
 [editable path="Deck"]
 [editable path="Discard"]
