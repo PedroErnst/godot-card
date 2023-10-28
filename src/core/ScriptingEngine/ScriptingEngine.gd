@@ -11,6 +11,7 @@ extends Reference
 
 const _ASK_INTEGER_SCENE_FILE = CFConst.PATH_CORE + "AskInteger.tscn"
 const _ASK_INTEGER_SCENE = preload(_ASK_INTEGER_SCENE_FILE)
+const _PLACE_TILE_SCENE = preload("res://frontiers/PlaceTile.tscn")
 
 # Emitted when all tasks have been run succesfully
 signal tasks_completed
@@ -792,6 +793,21 @@ func add_grid(script: ScriptTask) -> void:
 		# than 1 column.
 		grid.rect_position.y += \
 				iter * grid.card_size.y * grid.card_play_scale
+
+
+func place_tile(script: ScriptTask) -> int:
+	print("Placing a tile" + script.get_property(SP.KEY_TILE_NAME))
+	var place_tile_dialog = _PLACE_TILE_SCENE.instance()
+	# AskInteger tasks have to always provide a min and max value
+	place_tile_dialog.prep(script.owner.canonical_name, 1, 2)
+	# We have to wait until the player has finished selecting an option
+	yield(place_tile_dialog,"tile_placement_exited")
+	var retcode = CFConst.ReturnCode.FAILED
+	stored_integer = place_tile_dialog.number
+	# Garbage cleanup
+	place_tile_dialog.queue_free()
+	return(retcode);
+
 
 # Task for modifying a a counter.
 # If this task is specified, the variable [counters](Board#counters) **has** to be set

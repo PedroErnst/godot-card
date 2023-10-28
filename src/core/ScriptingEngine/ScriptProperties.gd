@@ -297,6 +297,9 @@ const KEY_BOARD_POSITION := "board_position"
 # to not cause this situation.
 const KEY_GRID_NAME := "grid_name"
 # Value Type: String.
+
+const KEY_TILE_NAME := "tile_name"
+# Value Type: String.
 #
 # Used with the [mod_counter](ScriptingEngine#mod_counter) task to specify
 # Which counter to modify with this task

@@ -18,6 +18,11 @@ const scripts := {
 					SP.KEY_FAIL_COST_ON_SKIP: true,
 				},
 				{
+					"name": "place_tile",
+					"is_cost": true,
+					SP.KEY_TILE_NAME: "Grassland",
+				},
+				{
 					"name": "move_card_to_container",
 					"subject": "self",
 					"dest_container": "discard",
