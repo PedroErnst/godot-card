@@ -167,6 +167,8 @@ func execute(_run_type := CFInt.RunType.NORMAL) -> void:
 						"requesting_object": script.owner,
 						"modifier": _retrieve_temp_modifiers(script, "properties")
 					}
+					
+				print("about to call " + script.script_name + " with run type " + str(run_type))
 				var retcode = call(script.script_name, script)
 				if retcode is GDScriptFunctionState:
 					retcode = yield(retcode, "completed")
@@ -796,16 +798,13 @@ func add_grid(script: ScriptTask) -> void:
 
 
 func place_tile(script: ScriptTask) -> int:
-	print("Placing a tile" + script.get_property(SP.KEY_TILE_NAME))
-	var place_tile_dialog = _PLACE_TILE_SCENE.instance()
-	# AskInteger tasks have to always provide a min and max value
-	place_tile_dialog.prep(script.owner.canonical_name, 1, 2)
+	print(get_stack()[0]["function"])
+	print(str(run_type))
+	var place_tile_dialog = cfc.NMAP.board.get_node("PlaceTile")
+	place_tile_dialog.askToPlaceTile(script.get_property(SP.DEFINITION), run_type)
 	# We have to wait until the player has finished selecting an option
-	yield(place_tile_dialog,"tile_placement_exited")
-	var retcode = CFConst.ReturnCode.FAILED
-	stored_integer = place_tile_dialog.number
+	var retcode = yield(place_tile_dialog,"tile_placement_exited")
 	# Garbage cleanup
-	place_tile_dialog.queue_free()
 	return(retcode);
 
 
@@ -878,6 +877,7 @@ func mod_counter(script: ScriptTask) -> int:
 #	* [KEY_EXEC_TEMP_MOD_COUNTERS](ScriptProperties#KEY_EXEC_TEMP_MOD_COUNTERS)
 #	* [KEY_EXEC_TRIGGER](ScriptProperties#KEY_EXEC_TRIGGER)
 func execute_scripts(script: ScriptTask) -> int:
+	print("execute_scripts")
 	var retcode : int = CFConst.ReturnCode.CHANGED
 	# If your subject is "self" make sure you know what you're doing
 	# or you might end up in an inifinite loop

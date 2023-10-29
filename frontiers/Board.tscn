@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://frontiers/Deck.gd" type="Script" id=1]
 [ext_resource path="res://src/core/Pile.tscn" type="PackedScene" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://frontiers/resource/gfx/wesnoth/wesnoth1.png" type="Texture" id=13]
 [ext_resource path="res://frontiers/resource/gfx/wesnoth/wesnoth-buildings.png" type="Texture" id=14]
 [ext_resource path="res://frontiers/EndTurn.gd" type="Script" id=15]
+[ext_resource path="res://frontiers/PlaceTile.tscn" type="PackedScene" id=16]
+[ext_resource path="res://frontiers/Tiles.gd" type="Script" id=17]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -76,6 +78,76 @@ bg_color = Color( 0.145098, 0.145098, 0.145098, 1 )
 1/shape_one_way_margin = 0.0
 1/shapes = [  ]
 1/z_index = 0
+2/name = "wesnoth1.png 2"
+2/texture = ExtResource( 13 )
+2/tex_offset = Vector2( -10, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 216, 504, 72, 72 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "wesnoth1.png 3"
+3/texture = ExtResource( 13 )
+3/tex_offset = Vector2( -10, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 288, 360, 72, 72 )
+3/tile_mode = 0
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+4/name = "wesnoth1.png 4"
+4/texture = ExtResource( 13 )
+4/tex_offset = Vector2( -10, 0 )
+4/modulate = Color( 1, 1, 1, 1 )
+4/region = Rect2( 144, 504, 360, 72 )
+4/tile_mode = 2
+4/autotile/icon_coordinate = Vector2( 0, 0 )
+4/autotile/tile_size = Vector2( 72, 72 )
+4/autotile/spacing = 0
+4/autotile/occluder_map = [  ]
+4/autotile/navpoly_map = [  ]
+4/autotile/priority_map = [  ]
+4/autotile/z_index_map = [  ]
+4/occluder_offset = Vector2( 0, 0 )
+4/navigation_offset = Vector2( 0, 0 )
+4/shape_offset = Vector2( 0, 0 )
+4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+4/shape_one_way = false
+4/shape_one_way_margin = 0.0
+4/shapes = [  ]
+4/z_index = 0
+5/name = "wesnoth1.png 5"
+5/texture = ExtResource( 13 )
+5/tex_offset = Vector2( -10, 0 )
+5/modulate = Color( 1, 1, 1, 1 )
+5/region = Rect2( 216, 360, 216, 72 )
+5/tile_mode = 2
+5/autotile/icon_coordinate = Vector2( 0, 0 )
+5/autotile/tile_size = Vector2( 72, 72 )
+5/autotile/spacing = 0
+5/autotile/occluder_map = [  ]
+5/autotile/navpoly_map = [  ]
+5/autotile/priority_map = [  ]
+5/autotile/z_index_map = [  ]
+5/occluder_offset = Vector2( 0, 0 )
+5/navigation_offset = Vector2( 0, 0 )
+5/shape_offset = Vector2( 0, 0 )
+5/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+5/shape_one_way = false
+5/shape_one_way_margin = 0.0
+5/shapes = [  ]
+5/z_index = 0
 
 [node name="Board" type="Control"]
 anchor_right = 1.0
@@ -223,9 +295,7 @@ overlap_shift_direction = 0
 index_shift_priority = 0
 card_size = Vector2( 150, 240 )
 show_manipulation_buttons = false
-excess_discard_pile_name = ""
 hand_size = 10
-excess_cards = 0
 
 [node name="Counters" parent="." instance=ExtResource( 6 )]
 margin_top = 205.0
@@ -266,13 +336,14 @@ margin_right = -2.0
 margin_bottom = -2.0
 custom_styles/panel = SubResource( 3 )
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="Tiles" type="TileMap" parent="."]
 tile_set = SubResource( 4 )
 cell_size = Vector2( 54, 72 )
 cell_custom_transform = Transform2D( 64, 0, 50, 64, 0, 0 )
 cell_half_offset = 1
 format = 1
-tile_data = PoolIntArray( 131083, 0, 458755 )
+tile_data = PoolIntArray( 196614, 4, 3 )
+script = ExtResource( 17 )
 
 [node name="EndTurn" type="Button" parent="."]
 margin_left = 1189.0
@@ -282,6 +353,10 @@ margin_bottom = 466.0
 text = "End Turn"
 script = ExtResource( 15 )
 
+[node name="PlaceTile" parent="." instance=ExtResource( 16 )]
+
+[connection signal="shuffle_completed" from="Deck" to="EndTurn" method="_on_Deck_shuffle_completed"]
+[connection signal="tile_clicked" from="Tiles" to="PlaceTile" method="_on_Tiles_tile_clicked"]
 [connection signal="button_down" from="EndTurn" to="EndTurn" method="_on_EndTurn_button_down"]
 
 [editable path="Deck"]

@@ -4,53 +4,26 @@ extends Reference
 const scripts := {
 	"Grassland": {
 		"manual": {
-			"hand": [
-				{
-					"is_cost": true,
-					"name": "mod_counter",
-					"modification": -1,
-					"counter_name":  "credits",
-					SP.FILTER_PER_COUNTER: {
-						SP.KEY_COUNTER_NAME: "credits",
-						SP.KEY_COMPARISON: "ge",
-						SP.FILTER_COUNT: 1,
-					},
-					SP.KEY_FAIL_COST_ON_SKIP: true,
-				},
-				{
-					"name": "place_tile",
-					"is_cost": true,
-					SP.KEY_TILE_NAME: "Grassland",
-				},
-				{
-					"name": "move_card_to_container",
-					"subject": "self",
-					"dest_container": "discard",
-				},
-			]
+			"type": "place_tile",
+			"tile": {
+				SP.TYPE: 2,
+				SP.NAME: "Grassland",
+			},
+			"costs": {
+				"credits": 1,
+			},
 		},
 	},
 	"Hills": {
 		"manual": {
-			"hand": [
-				{
-					"is_cost": true,
-					"name": "mod_counter",
-					"modification": -2,
-					"counter_name":  "credits",
-					SP.FILTER_PER_COUNTER: {
-						SP.KEY_COUNTER_NAME: "credits",
-						SP.KEY_COMPARISON: "ge",
-						SP.FILTER_COUNT: 2,
-					},
-					SP.KEY_FAIL_COST_ON_SKIP: true,
-				},
-				{
-					"name": "move_card_to_container",
-					"subject": "self",
-					"dest_container": "discard",
-				},
-			]
+			"type": "place_tile",
+			"tile": {
+				SP.TYPE: 3,
+				SP.NAME: "Hills",
+			},
+			"costs": {
+				"credits": 2,
+			},
 		},
 	},
 }
