@@ -58,14 +58,16 @@ func setTileTerrain(terrain_type: int, coord: Vector2) -> void:
 func _input(ev):
 	if ev is InputEventMouseButton and ev.button_index == BUTTON_LEFT and ev.pressed:
 		var tilePos = pixelToTileCoord(ev.global_position)
-		var exactPos = pixel_to_flat_hex(ev.global_position)
 		print(tilePos)
-		print(exactPos)
 		emit_signal("tile_clicked", tilePos)
 
 func pixelToTileCoord(pixel: Vector2) -> Vector2:
 	var tileX = pixel.x / FRO.TILE_SIZE_X
-	var tileY = pixel.y / FRO.TILE_SIZE_Y
+	var yVal = pixel.y
+	print(int(tileX) % 2)
+	if int(tileX) % 2:
+		yVal -= (FRO.TILE_SIZE_Y / 2)
+	var tileY = yVal / FRO.TILE_SIZE_Y
 	
 	tileX = floor(tileX)
 	tileY = floor(tileY)
