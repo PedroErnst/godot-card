@@ -194,6 +194,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/DetailPanels.gd"
 }, {
+"base": "SP",
+"class": "FRO",
+"language": "GDScript",
+"path": "res://frontiers/FrontiersConst.gd"
+}, {
 "base": "Reference",
 "class": "GameStats",
 "language": "GDScript",
@@ -362,6 +367,7 @@ _global_script_class_icons={
 "DeckLoader": "",
 "DeckNameRandomizer": "",
 "DetailPanels": "",
+"FRO": "",
 "GameStats": "",
 "GutHookScript": "",
 "GutTest": "",

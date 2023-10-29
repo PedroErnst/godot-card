@@ -6,8 +6,11 @@ const scripts := {
 		"manual": {
 			"type": "place_tile",
 			"tile": {
-				SP.TYPE: 2,
-				SP.NAME: "Grassland",
+				"type": 2,
+				"name": "Grassland",
+				"rules": {
+					"location": "empty",
+				},
 			},
 			"costs": {
 				"credits": 1,
@@ -18,8 +21,11 @@ const scripts := {
 		"manual": {
 			"type": "place_tile",
 			"tile": {
-				SP.TYPE: 3,
-				SP.NAME: "Hills",
+				"type": 3,
+				"name": "Hills",
+				"rules": {
+					"location": "empty",
+				},
 			},
 			"costs": {
 				"credits": 2,

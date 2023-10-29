@@ -1,18 +1,6 @@
 extends TileMap
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 signal tile_clicked
-
-const SIZE_X = 54
-const SIZE_Y = 72
-
-const MAP_LIMIT_X = 22
-const MAP_LIMIT_Y = 5
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,10 +16,38 @@ func _input(ev):
 		var tilePos = pixelToTileCoord(ev.global_position)
 		var currentTile = get_cellv(tilePos)
 		emit_signal("tile_clicked", tilePos)
+		
+func getAdyacentTiles(coord: Vector2) -> Array:
+	var adyacent = []
+	var coords = [
+		Vector2(coord.x, coord.y - 1),
+		Vector2(coord.x, coord.y + 1),
+		Vector2(coord.x - 1, coord.y),
+		Vector2(coord.x + 1, coord.y),
+	]
+	if (int(coord.x) % 1): 
+		coords.append(Vector2(coord.x + 1, coord.y + 1))
+		coords.append(Vector2(coord.x - 1, coord.y + 1))
+	else:
+		coords.append(Vector2(coord.x - 1, coord.y - 1))
+		coords.append(Vector2(coord.x + 1, coord.y - 1))
+		
+	for coord in coords:
+		if coordWithinBounds(coord):
+			adyacent.append(get_cellv(coord))
+	
+	return adyacent
+	
+func coordWithinBounds(coord: Vector2) -> bool:
+	if coord.x < 0 or coord.x > FRO.MAP_LIMIT_X:
+		return false
+	if coord.y < 0 or coord.y > FRO.MAP_LIMIT_Y:
+		return false
+	return true
 
 func pixelToTileCoord(pixel: Vector2) -> Vector2:
-	var tileX = pixel.x / SIZE_X
-	var tileY = pixel.y / SIZE_Y
+	var tileX = pixel.x / FRO.TILE_SIZE_X
+	var tileY = pixel.y / FRO.TILE_SIZE_Y
 	
 	tileX = floor(tileX)
 	tileY = floor(tileY)
