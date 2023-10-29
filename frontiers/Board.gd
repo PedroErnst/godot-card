@@ -92,6 +92,7 @@ func load_test_cards(gut := true) -> void:
 	var initial_cards := {
 		"Grassland" : 6,
 		"Hills" : 4,
+		"Farm" : 2,
 	}
 	
 	var test_card_array := []

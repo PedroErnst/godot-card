@@ -20,4 +20,12 @@ const CARDS := {
 		"Cost": 2,
 		"Power": 0,
 	},
+	"Farm": {
+		"Type": "Terrain",
+		"Tags": ["Building"],
+		"Requirements": "",
+		"Abilities": "Must be adyacent to villages. Produces food.",
+		"Cost": 2,
+		"Power": 0,
+	},
 }

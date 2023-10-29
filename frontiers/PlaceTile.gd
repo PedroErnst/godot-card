@@ -28,8 +28,22 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 		return false
 	
 	var tileAtLocation = tiles.getTileAt(tilePos)
-	if tileAtLocation.terrain_type >= 0:
-		return false
+	if "rules" in definition:
+		for ruleKey in definition.rules:
+			if ruleKey == "terrain_type":
+				if tileAtLocation.terrain_type != definition.rules[ruleKey]:
+					return false
+			if ruleKey == "adyacent_to":
+				var adyacentType = definition.rules[ruleKey].type
+				var adyacentId = definition.rules[ruleKey].id
+				var hasMatchingAdyacent = false
+				for tile in tiles.getAdyacentTiles(tilePos):
+					if adyacentType == "building" and tile.building_type == adyacentId:
+						hasMatchingAdyacent = true
+					if adyacentType == "terrain" and tile.terrain_type == adyacentId:
+						hasMatchingAdyacent = true
+				if not hasMatchingAdyacent:
+					return false
 	
 	var adyacentTiles = tiles.getAdyacentTiles(tilePos)
 	var anyAdyacentExists = false
@@ -44,7 +58,10 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 	
 func placeTile(tilePos: Vector2) -> void:
 	var tiles = cfc.NMAP.board.get_node("TileRegister")
-	tiles.setTileTerrain(tileToPlace.type, tilePos)
+	if tileToPlace.layer == "terrain":
+		tiles.setTileTerrain(tileToPlace.type, tilePos)
+	elif tileToPlace.layer == "building":
+		tiles.setTileBuilding(tileToPlace.type, tilePos)
 
 func checkSuccessful() -> void:
 	awaiting_placement = false

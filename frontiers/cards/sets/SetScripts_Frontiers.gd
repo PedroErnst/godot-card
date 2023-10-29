@@ -6,10 +6,11 @@ const scripts := {
 		"manual": {
 			"type": "place_tile",
 			"tile": {
+				"layer": "terrain",
 				"type": 2,
 				"name": "Grassland",
 				"rules": {
-					"location": "empty",
+					"terrain_type": -1,
 				},
 			},
 			"costs": {
@@ -21,10 +22,31 @@ const scripts := {
 		"manual": {
 			"type": "place_tile",
 			"tile": {
+				"layer": "terrain",
 				"type": 3,
 				"name": "Hills",
 				"rules": {
-					"location": "empty",
+					"terrain_type": -1,
+				},
+			},
+			"costs": {
+				"credits": 2,
+			},
+		},
+	},
+	"Farm": {
+		"manual": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "building",
+				"type": 7,
+				"name": "Farm",
+				"rules": {
+					"terrain_type": 2,
+					"adyacent_to": {
+						"type": "building",
+						"id": 6
+					},
 				},
 			},
 			"costs": {

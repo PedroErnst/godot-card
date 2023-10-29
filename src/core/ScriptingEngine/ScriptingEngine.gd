@@ -797,16 +797,6 @@ func add_grid(script: ScriptTask) -> void:
 				iter * grid.card_size.y * grid.card_play_scale
 
 
-func place_tile(script: ScriptTask) -> int:
-	print(get_stack()[0]["function"])
-	print(str(run_type))
-	var place_tile_dialog = cfc.NMAP.board.get_node("PlaceTile")
-	place_tile_dialog.askToPlaceTile(script.get_property(SP.DEFINITION), run_type)
-	# We have to wait until the player has finished selecting an option
-	var retcode = yield(place_tile_dialog,"tile_placement_exited")
-	# Garbage cleanup
-	return(retcode);
-
 
 # Task for modifying a a counter.
 # If this task is specified, the variable [counters](Board#counters) **has** to be set
