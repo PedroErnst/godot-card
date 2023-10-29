@@ -17,6 +17,8 @@ func _ready() -> void:
 		$SeedLabel.text = "Game Seed is: " + cfc.game_rng_seed
 	if not get_tree().get_root().has_node('Gut'):
 		load_test_cards(false)
+		
+	$TileRegister.setUp()
 	
 	startTurn()
 	# warning-ignore:return_value_discarded

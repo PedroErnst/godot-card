@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://frontiers/Deck.gd" type="Script" id=1]
 [ext_resource path="res://src/core/Pile.tscn" type="PackedScene" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://frontiers/EndTurn.gd" type="Script" id=15]
 [ext_resource path="res://frontiers/PlaceTile.tscn" type="PackedScene" id=16]
 [ext_resource path="res://frontiers/Tiles.gd" type="Script" id=17]
+[ext_resource path="res://frontiers/TileRegister.gd" type="Script" id=18]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -336,15 +337,6 @@ margin_right = -2.0
 margin_bottom = -2.0
 custom_styles/panel = SubResource( 3 )
 
-[node name="Tiles" type="TileMap" parent="."]
-tile_set = SubResource( 4 )
-cell_size = Vector2( 54, 72 )
-cell_custom_transform = Transform2D( 64, 0, 50, 64, 0, 0 )
-cell_half_offset = 1
-format = 1
-tile_data = PoolIntArray( 196614, 4, 3 )
-script = ExtResource( 17 )
-
 [node name="EndTurn" type="Button" parent="."]
 margin_left = 1189.0
 margin_top = 439.0
@@ -355,9 +347,22 @@ script = ExtResource( 15 )
 
 [node name="PlaceTile" parent="." instance=ExtResource( 16 )]
 
+[node name="TileRegister" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 18 )
+
+[node name="Tiles" type="TileMap" parent="TileRegister"]
+tile_set = SubResource( 4 )
+cell_size = Vector2( 54, 72 )
+cell_custom_transform = Transform2D( 64, 0, 50, 64, 0, 0 )
+cell_half_offset = 1
+format = 1
+script = ExtResource( 17 )
+
 [connection signal="shuffle_completed" from="Deck" to="EndTurn" method="_on_Deck_shuffle_completed"]
-[connection signal="tile_clicked" from="Tiles" to="PlaceTile" method="_on_Tiles_tile_clicked"]
 [connection signal="button_down" from="EndTurn" to="EndTurn" method="_on_EndTurn_button_down"]
+[connection signal="tile_clicked" from="TileRegister" to="PlaceTile" method="_on_TileRegister_tile_clicked"]
 
 [editable path="Deck"]
 [editable path="Discard"]

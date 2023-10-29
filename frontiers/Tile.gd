@@ -1,8 +1,8 @@
 extends Reference
 
-var type : int
-var name : String
+class_name Tile
 
-func _init(definition: Dictionary):
-	type = definition.type
-	name = definition.name
+var terrain_type : int
+
+func _init():
+	terrain_type = -1

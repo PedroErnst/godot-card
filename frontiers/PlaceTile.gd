@@ -21,30 +21,20 @@ func askToPlaceTile(tileDefinition: Dictionary) -> void:
 func _on_Cancel_pressed():
 	close(false)
 
-func _on_Tiles_tile_clicked(tilePos: Vector2):
-	if not awaiting_placement:
-		return
-
-	if not tilePlacementValid(tilePos, tileToPlace):
-		return
-
-	placeTile(tilePos)
-	close(true)
-	
 func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
-	var tiles = cfc.NMAP.board.get_node("Tiles")
+	var tiles = cfc.NMAP.board.get_node("TileRegister")
 	
 	if not tiles.coordWithinBounds(tilePos):
 		return false
 	
-	var tileAtLocation = tiles.get_cellv(tilePos)
-	if tileAtLocation >= 0:
+	var tileAtLocation = tiles.getTileAt(tilePos)
+	if tileAtLocation.terrain_type >= 0:
 		return false
 	
 	var adyacentTiles = tiles.getAdyacentTiles(tilePos)
 	var anyAdyacentExists = false
 	for adyacent in adyacentTiles:
-		if adyacent >= 0:
+		if adyacent.terrain_type >= 0:
 			anyAdyacentExists = true
 			
 	if not anyAdyacentExists:
@@ -53,8 +43,8 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 	return true
 	
 func placeTile(tilePos: Vector2) -> void:
-	var tiles = cfc.NMAP.board.get_node("Tiles")
-	tiles.set_cellv(tilePos, tileToPlace.type)
+	var tiles = cfc.NMAP.board.get_node("TileRegister")
+	tiles.setTileTerrain(tileToPlace.type, tilePos)
 
 func checkSuccessful() -> void:
 	awaiting_placement = false
@@ -66,3 +56,14 @@ func close(code: bool) -> void:
 	tileToPlace = null
 	emit_signal("tile_placement_exited", code)
 	hide()
+
+
+func _on_TileRegister_tile_clicked(tilePos: Vector2)-> void:
+	if not awaiting_placement:
+		return
+
+	if not tilePlacementValid(tilePos, tileToPlace):
+		return
+
+	placeTile(tilePos)
+	close(true)

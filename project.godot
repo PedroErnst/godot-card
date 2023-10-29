@@ -304,6 +304,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/core/Card/TargetingArrow.gd"
 }, {
+"base": "Reference",
+"class": "Tile",
+"language": "GDScript",
+"path": "res://frontiers/Tile.gd"
+}, {
+"base": "Control",
+"class": "TileRegister",
+"language": "GDScript",
+"path": "res://frontiers/TileRegister.gd"
+}, {
 "base": "HBoxContainer",
 "class": "Token",
 "language": "GDScript",
@@ -389,6 +399,8 @@ _global_script_class_icons={
 "SelectionWindow": "",
 "SetPreload": "",
 "TargetingArrow": "",
+"Tile": "",
+"TileRegister": "",
 "Token": "",
 "TokenDrawer": "",
 "UTCommon": "",

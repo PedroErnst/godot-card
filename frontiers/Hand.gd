@@ -10,8 +10,8 @@ func playCard(card: Card, definition: Dictionary) -> void:
 	if not canPayCosts(definition):
 		return
 	
-	var interactionSuccess = interactWithUser(definition)
-	yield(self, "interaction_complete")
+	interactWithUser(definition)
+	var interactionSuccess = yield(self, "interaction_complete")
 	if not interactionSuccess:
 		return
 
@@ -25,7 +25,7 @@ func interactWithUser(definition: Dictionary)-> bool:
 		place_tile_dialog.askToPlaceTile(definition.tile)
 		success = yield(place_tile_dialog, "tile_placement_exited")
 
-	emit_signal("interaction_complete")
+	emit_signal("interaction_complete", success)
 	return success
 
 
