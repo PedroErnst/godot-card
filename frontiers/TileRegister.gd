@@ -13,24 +13,27 @@ class_name TileRegister
 var register = {}
 
 func setUp()-> void:
-	setTileTerrain(2, Vector2(6.0, 2.0))
-	setTileBuilding(6, Vector2(6.0, 2.0))
+	setTileTerrain(2, Vector2(5.0, 2.0))
+	setTileBuilding(6, Vector2(5.0, 2.0))
 
 		
 func getAdyacentTiles(coord: Vector2) -> Array:
 	var adyacent = []
-	var coords = [
-		Vector2(coord.x, coord.y - 1),
-		Vector2(coord.x, coord.y + 1),
-		Vector2(coord.x - 1, coord.y),
-		Vector2(coord.x + 1, coord.y),
-	]
-	if (int(coord.x) % 1): 
+	var coords = []
+	if (int(coord.x) % 2): 
+		coords.append(Vector2(coord.x, coord.y - 1))
+		coords.append(Vector2(coord.x + 1, coord.y))
 		coords.append(Vector2(coord.x + 1, coord.y + 1))
+		coords.append(Vector2(coord.x, coord.y + 1))
 		coords.append(Vector2(coord.x - 1, coord.y + 1))
+		coords.append(Vector2(coord.x - 1, coord.y))
 	else:
-		coords.append(Vector2(coord.x - 1, coord.y - 1))
+		coords.append(Vector2(coord.x, coord.y - 1))
 		coords.append(Vector2(coord.x + 1, coord.y - 1))
+		coords.append(Vector2(coord.x + 1, coord.y))
+		coords.append(Vector2(coord.x, coord.y + 1))
+		coords.append(Vector2(coord.x - 1, coord.y))
+		coords.append(Vector2(coord.x - 1, coord.y - 1))
 		
 	for coord in coords:
 		if coordWithinBounds(coord):
@@ -42,6 +45,7 @@ func getTileAt(coord: Vector2)-> Tile:
 	var key = coord.x * 1000 + coord.y
 	if not key in register:
 		register[key] = Tile.new()
+		register[key].location = coord
 	
 	return register[key]
 
