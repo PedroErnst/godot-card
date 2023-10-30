@@ -8,6 +8,7 @@ func _ready() -> void:
 
 func playCard(card: Card, definition: Dictionary) -> void:
 	if not canPayCosts(definition):
+		showError("Can't afford to use this!")
 		return
 	
 	interactWithUser(definition)
@@ -18,6 +19,9 @@ func playCard(card: Card, definition: Dictionary) -> void:
 	payCosts(definition)
 	card.move_to(cfc.NMAP.discard)
 
+func showError(text: String)-> void:
+	cfc.NMAP.board.get_node("Notification").showNotification(text, '', 3)
+	
 func interactWithUser(definition: Dictionary)-> bool:
 	var success = true
 	if definition.type == "place_tile":

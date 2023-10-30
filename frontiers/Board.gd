@@ -27,10 +27,21 @@ func _ready() -> void:
 func endTurn() -> void:
 	cfc.NMAP.hand.discardHand()
 	startTurn()
+
+
+func incomePhase()-> void:
+	for tile in $TileRegister.allTiles():
+		if tile.building_type < 0:
+			continue
+		if tile.building_type == FRO.BUILDING_FARM:
+			$Counters.mod_counter("food", 1)
+		if tile.building_type == FRO.BUILDING_LOGGING_CAMP:
+			$Counters.mod_counter("wood", 1)
 	$Counters.mod_counter("credits", 3, true)
 
 
 func startTurn() -> void:
+	incomePhase()
 	cfc.NMAP.hand.drawFromDeck(5)
 
 
@@ -90,9 +101,10 @@ func _on_Debug_toggled(button_pressed: bool) -> void:
 # Loads a sample set of cards to use for testing
 func load_test_cards(gut := true) -> void:
 	var initial_cards := {
-		"Grassland" : 6,
-		"Hills" : 4,
+		"Grassland" : 4,
+		"Hills" : 3,
 		"Farm" : 2,
+		"Logging Camp" : 1,
 	}
 	
 	var test_card_array := []

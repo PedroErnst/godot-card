@@ -49,6 +49,9 @@ func getTileAt(coord: Vector2)-> Tile:
 	
 	return register[key]
 
+func allTiles()-> Array:
+	return register.values()
+
 func setTileAt(coord: Vector2, tile: Tile)-> void:
 	var key = coord.x * 1000 + coord.y
 	register[key] = tile
@@ -59,6 +62,13 @@ func setTileTerrain(terrain_type: int, coord: Vector2) -> void:
 	tile.terrain_type = terrain_type
 	setTileAt(coord, tile)
 	$Tiles.set_cellv(coord, terrain_type)
+
+
+func setTileFlora(flora_type: int, coord: Vector2) -> void:
+	var tile = getTileAt(coord)
+	tile.flora_type = flora_type
+	setTileAt(coord, tile)
+	$Flora.set_cellv(coord, flora_type)
 
 func setTileBuilding(building_type: int, coord: Vector2) -> void:
 	var tile = getTileAt(coord)

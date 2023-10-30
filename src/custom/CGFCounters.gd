@@ -17,8 +17,16 @@ func _ready() -> void:
 	value_node = "Value"
 	needed_counters = {
 		"credits": {
-			"CounterTitle": "Command: ",
+			"CounterTitle": "Command:",
 			"Value": 3
+		},
+		"food": {
+			"CounterTitle": "Food:",
+			"Value": 0
+		},
+		"wood": {
+			"CounterTitle": "Wood:",
+			"Value": 0
 		},
 	}
 	# warning-ignore:return_value_discarded

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://frontiers/Deck.gd" type="Script" id=1]
 [ext_resource path="res://src/core/Pile.tscn" type="PackedScene" id=2]
@@ -18,6 +18,8 @@
 [ext_resource path="res://frontiers/PlaceTile.tscn" type="PackedScene" id=16]
 [ext_resource path="res://frontiers/Tiles.gd" type="Script" id=17]
 [ext_resource path="res://frontiers/TileRegister.gd" type="Script" id=18]
+[ext_resource path="res://frontiers/resource/gfx/wesnoth/wesnoth-flora.png" type="Texture" id=19]
+[ext_resource path="res://frontiers/Notification.gd" type="Script" id=20]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -177,6 +179,54 @@ bg_color = Color( 0.145098, 0.145098, 0.145098, 1 )
 7/shape_one_way_margin = 0.0
 7/shapes = [  ]
 7/z_index = 0
+8/name = "wesnoth-buildings.png 8"
+8/texture = ExtResource( 14 )
+8/tex_offset = Vector2( 0, 0 )
+8/modulate = Color( 1, 1, 1, 1 )
+8/region = Rect2( 80, 837, 72, 74 )
+8/tile_mode = 0
+8/occluder_offset = Vector2( 0, 0 )
+8/navigation_offset = Vector2( 0, 0 )
+8/shape_offset = Vector2( 0, 0 )
+8/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+8/shape_one_way = false
+8/shape_one_way_margin = 0.0
+8/shapes = [  ]
+8/z_index = 0
+9/name = "wesnoth-flora.png 9"
+9/texture = ExtResource( 19 )
+9/tex_offset = Vector2( 0, 0 )
+9/modulate = Color( 1, 1, 1, 1 )
+9/region = Rect2( 972, 23, 78, 97 )
+9/tile_mode = 0
+9/occluder_offset = Vector2( 0, 0 )
+9/navigation_offset = Vector2( 0, 0 )
+9/shape_offset = Vector2( 0, 0 )
+9/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+9/shape_one_way = false
+9/shape_one_way_margin = 0.0
+9/shapes = [  ]
+9/z_index = 0
+10/name = "wesnoth-buildings.png 10"
+10/texture = ExtResource( 14 )
+10/tex_offset = Vector2( 0, 0 )
+10/modulate = Color( 1, 1, 1, 1 )
+10/region = Rect2( 373, 735, 80, 77 )
+10/tile_mode = 0
+10/occluder_offset = Vector2( 0, 0 )
+10/navigation_offset = Vector2( 0, 0 )
+10/shape_offset = Vector2( 0, 0 )
+10/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+10/shape_one_way = false
+10/shape_one_way_margin = 1.0
+10/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": null,
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+10/z_index = 0
 
 [node name="Board" type="Control"]
 anchor_right = 1.0
@@ -385,6 +435,16 @@ tile_set = SubResource( 4 )
 cell_size = Vector2( 54, 72 )
 cell_custom_transform = Transform2D( 64, 0, 50, 64, 0, 0 )
 cell_half_offset = 1
+centered_textures = true
+format = 1
+script = ExtResource( 17 )
+
+[node name="Flora" type="TileMap" parent="TileRegister"]
+tile_set = SubResource( 4 )
+cell_size = Vector2( 54, 72 )
+cell_custom_transform = Transform2D( 64, 0, 50, 64, 0, 0 )
+cell_half_offset = 1
+centered_textures = true
 format = 1
 script = ExtResource( 17 )
 
@@ -393,8 +453,16 @@ tile_set = SubResource( 4 )
 cell_size = Vector2( 54, 72 )
 cell_custom_transform = Transform2D( 64, 0, 50, 64, 0, 0 )
 cell_half_offset = 1
+centered_textures = true
 format = 1
 script = ExtResource( 17 )
+
+[node name="Notification" type="Label" parent="."]
+margin_left = 97.0
+margin_top = 8.0
+margin_right = 466.0
+margin_bottom = 39.0
+script = ExtResource( 20 )
 
 [connection signal="shuffle_completed" from="Deck" to="EndTurn" method="_on_Deck_shuffle_completed"]
 [connection signal="button_down" from="EndTurn" to="EndTurn" method="_on_EndTurn_button_down"]

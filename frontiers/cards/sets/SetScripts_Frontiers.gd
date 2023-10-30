@@ -12,6 +12,9 @@ const scripts := {
 				"rules": {
 					"terrain_type": -1,
 				},
+				"flora": {
+					9: 30
+				}
 			},
 			"costs": {
 				"credits": 1,
@@ -28,6 +31,9 @@ const scripts := {
 				"rules": {
 					"terrain_type": -1,
 				},
+				"flora": {
+					9: 60
+				}
 			},
 			"costs": {
 				"credits": 2,
@@ -47,6 +53,22 @@ const scripts := {
 						"type": "building",
 						"id": 6
 					},
+				},
+			},
+			"costs": {
+				"credits": 2,
+			},
+		},
+	},
+	"Logging Camp": {
+		"manual": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "building",
+				"type": 10,
+				"name": "Logging Camp",
+				"rules": {
+					"flora_type": 9,
 				},
 			},
 			"costs": {
