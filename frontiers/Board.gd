@@ -15,8 +15,7 @@ func _ready() -> void:
 	if not cfc.ut:
 		cfc.game_rng_seed = CFUtils.generate_random_seed()
 		$SeedLabel.text = "Game Seed is: " + cfc.game_rng_seed
-	if not get_tree().get_root().has_node('Gut'):
-		load_test_cards(false)
+	loadInitialCards()
 		
 	$TileRegister.setUp()
 	
@@ -98,24 +97,16 @@ func _on_EnableAttach_toggled(button_pressed: bool) -> void:
 func _on_Debug_toggled(button_pressed: bool) -> void:
 	cfc._debug = button_pressed
 
-# Loads a sample set of cards to use for testing
-func load_test_cards(gut := true) -> void:
-	var initial_cards := {
-		"Grassland" : 4,
-		"Hills" : 3,
-		"Farm" : 2,
-		"Logging Camp" : 1,
-	}
-	
-	var test_card_array := []
-	
-	for i in initial_cards:
-		var count =  initial_cards[i]
-		for n in count:
-			var card = cfc.instance_card(i)
-			cfc.NMAP.deck.add_child(card)
-			card._determine_idle_state()
-	
+func loadInitialCards() -> void:
+	var defs = cfc.load_card_definitions()
+	for cardName in defs:
+		var def = defs[cardName]
+		if "Starting Cards" in def:
+			for n in def["Starting Cards"]:
+				var card = cfc.instance_card(cardName)
+				cfc.NMAP.deck.add_child(card)
+				card._determine_idle_state()
+
 	cfc.NMAP.deck.shuffle_cards(false)
 
 func _on_DeckBuilder_pressed() -> void:

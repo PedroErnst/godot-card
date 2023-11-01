@@ -12,7 +12,7 @@ class_name CardConfig
 extends Reference
 
 # Properties which are placed as they are in appropriate labels
-const PROPERTIES_STRINGS := ["Type", "Requirements", "Abilities"]
+const PROPERTIES_STRINGS := ["Resources", "Requirements", "Abilities"]
 # Properties which are converted into string using a format defined in setup()
 const PROPERTIES_NUMBERS := ["Cost","Power"]
 # The name of these properties will be prepended before their value to their label.

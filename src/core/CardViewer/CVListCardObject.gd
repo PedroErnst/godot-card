@@ -33,7 +33,6 @@ func setup(_card_name: String) -> void:
 		if card_properties[prop] in card_viewer.generation_keys:
 			card_properties[prop] = card_viewer.generate_value(prop,card_properties)
 	card_name = _card_name
-	$Type.text = card_properties[CardConfig.SCENE_PROPERTY]
 	_card_label.text = card_name
 
 
