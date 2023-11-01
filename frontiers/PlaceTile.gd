@@ -39,6 +39,16 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 				if tileAtLocation.flora_type != definition.rules[ruleKey]:
 					showError("Cannot be placed on this tile (missing vegetation)")
 					return false
+			if ruleKey == "city_size":
+				if tileAtLocation.city_size < definition.rules[ruleKey]:
+					showError("Must select a city")
+					return false
+			if ruleKey == "food_available":
+				var required = tiles.foodRequiredToGrowCityAt(tilePos)
+				var available = cfc.NMAP.board.get_node("Counters").get_counter("food")
+				if available < required:
+					showError("Requires " + str(required) + " food")
+					return false
 			if ruleKey == "adyacent_to":
 				var adyacentType = definition.rules[ruleKey].type
 				var adyacentId = definition.rules[ruleKey].id
@@ -58,7 +68,7 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 		if adyacent.terrain_type >= 0:
 			anyAdyacentExists = true
 			
-	if not anyAdyacentExists:
+	if not anyAdyacentExists and tileAtLocation.terrain_type < 0:
 		showError("Must be adyacent to at least one other tile")
 		return false
 
@@ -69,6 +79,7 @@ func showError(text: String)-> void:
 	
 func placeTile(tilePos: Vector2) -> void:
 	var tiles = cfc.NMAP.board.get_node("TileRegister")
+	var counter = cfc.NMAP.board.get_node("Counters")
 	if tileToPlace.layer == "terrain":
 		tiles.setTileTerrain(tileToPlace.type, tilePos)
 		if "flora" in tileToPlace:
@@ -78,6 +89,16 @@ func placeTile(tilePos: Vector2) -> void:
 					break
 	elif tileToPlace.layer == "building":
 		tiles.setTileBuilding(tileToPlace.type, tilePos)
+	elif tileToPlace.layer == "effect":
+		if "flora" in tileToPlace:
+			tiles.setTileFlora(tileToPlace.flora, tilePos)
+		if "grow_city" in tileToPlace:
+			var required = tiles.foodRequiredToGrowCityAt(tilePos)
+			counter.mod_counter('food', -required)
+			tiles.growCity(tilePos)
+		if "resources" in tileToPlace:
+			for resource in tileToPlace["resources"]:
+				counter.mod_counter(resource, tileToPlace["resources"][resource])
 
 func checkSuccessful() -> void:
 	awaiting_placement = false

@@ -1418,10 +1418,9 @@ func execute_scripts(
 	common_pre_execution_scripts(trigger, trigger_details)
 	var card_scripts = retrieve_scripts(trigger)
 	
-	if card_scripts.empty():
-		return
-		
-	cfc.NMAP.hand.playCard(self, card_scripts)
+	if trigger == "manual":
+		cfc.NMAP.hand.playCard(self)
+
 	return
 	
 	# I use this spot to add a breakpoint when testing script behaviour

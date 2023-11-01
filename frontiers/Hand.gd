@@ -6,17 +6,20 @@ func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	$Control/ManipulationButtons/DiscardRandom.connect("pressed",self,'_on_DiscardRandom_Button_pressed')
 
-func playCard(card: Card, definition: Dictionary) -> void:
-	if not canPayCosts(definition):
+func playCard(card: Card) -> void:
+	if not "script" in card.properties:
+		return
+	var script = card.properties["script"]
+	if not canPayCosts(script):
 		showError("Can't afford to use this!")
 		return
 	
-	interactWithUser(definition)
+	interactWithUser(script)
 	var interactionSuccess = yield(self, "interaction_complete")
 	if not interactionSuccess:
 		return
 
-	payCosts(definition)
+	payCosts(script)
 	card.move_to(cfc.NMAP.discard)
 
 func showError(text: String)-> void:
@@ -35,6 +38,8 @@ func interactWithUser(definition: Dictionary)-> bool:
 
 func canPayCosts(definition: Dictionary) -> bool:
 	var counter = cfc.NMAP.board.get_node("Counters")
+	if not "costs" in definition:
+		return true
 	for type in definition.costs:
 		if counter.get_counter(type) < definition.costs[type]: 
 			return false
@@ -43,5 +48,7 @@ func canPayCosts(definition: Dictionary) -> bool:
 
 func payCosts(definition: Dictionary) -> void:
 	var counter = cfc.NMAP.board.get_node("Counters")
+	if not "costs" in definition:
+		return
 	for type in definition.costs:
 		counter.mod_counter(type, -definition.costs[type])

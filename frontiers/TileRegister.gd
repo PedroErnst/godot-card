@@ -11,12 +11,29 @@ class_name TileRegister
 # var b = "text"
 
 var register = {}
+var city_count = 0
 
 func setUp()-> void:
-	setTileTerrain(2, Vector2(5.0, 2.0))
-	setTileBuilding(6, Vector2(5.0, 2.0))
+	var startingTile = Vector2(5.0, 2.0)
+	setTileTerrain(2, startingTile)
+	createCity(startingTile)
+	
+func createCity(coord: Vector2)-> void:
+	setTileBuilding(6, coord)
+	var tile = getTileAt(coord)
+	tile.newCity()
+	setTileAt(coord, tile)
+	city_count += 1
+	
+func growCity(coord: Vector2)-> void:
+	var tile = getTileAt(coord)
+	tile.growCity()
+	setTileAt(coord, tile)
 
-		
+func foodRequiredToGrowCityAt(coord: Vector2)-> int:
+	var tile = getTileAt(coord)
+	return tile.city_size * tile.city_size
+
 func getAdyacentTiles(coord: Vector2) -> Array:
 	var adyacent = []
 	var coords = []
