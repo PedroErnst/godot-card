@@ -3,6 +3,7 @@ extends Control
 const Tile = preload("res://frontiers/Tile.gd")
 
 signal tile_clicked
+signal right_clicked
 
 class_name TileRegister
 
@@ -96,8 +97,9 @@ func setTileBuilding(building_type: int, coord: Vector2) -> void:
 func _input(ev):
 	if ev is InputEventMouseButton and ev.button_index == BUTTON_LEFT and ev.pressed:
 		var tilePos = pixelToTileCoord(ev.global_position)
-		print(tilePos)
 		emit_signal("tile_clicked", tilePos)
+	if ev is InputEventMouseButton and ev.button_index == BUTTON_RIGHT and ev.pressed:
+		emit_signal("right_clicked")
 
 func pixelToTileCoord(pixel: Vector2) -> Vector2:
 	var tileX = pixel.x / FRO.TILE_SIZE_X

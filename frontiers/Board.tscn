@@ -460,6 +460,7 @@ script = ExtResource( 20 )
 
 [connection signal="shuffle_completed" from="Deck" to="EndTurn" method="_on_Deck_shuffle_completed"]
 [connection signal="button_down" from="EndTurn" to="EndTurn" method="_on_EndTurn_button_down"]
+[connection signal="right_clicked" from="TileRegister" to="PlaceTile" method="_on_TileRegister_right_clicked"]
 [connection signal="tile_clicked" from="TileRegister" to="PlaceTile" method="_on_TileRegister_tile_clicked"]
 
 [editable path="Deck"]

@@ -121,3 +121,7 @@ func _on_TileRegister_tile_clicked(tilePos: Vector2)-> void:
 
 	placeTile(tilePos)
 	close(true)
+
+
+func _on_TileRegister_right_clicked():
+	close(false)
