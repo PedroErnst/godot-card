@@ -37,7 +37,7 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 					return false
 			if ruleKey == "flora_type":
 				if tileAtLocation.flora_type != definition.rules[ruleKey]:
-					showError("Cannot be placed on this tile (missing vegetation)")
+					showError("Cannot be placed on this tile (incorrect vegetation)")
 					return false
 			if ruleKey == "city_size":
 				if tileAtLocation.city_size < definition.rules[ruleKey]:

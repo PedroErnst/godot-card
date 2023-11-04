@@ -69,6 +69,7 @@ const CARDS := {
 				"name": "Farm",
 				"rules": {
 					"terrain_type": FRO.TERRAIN_GRASS,
+					"flora_type": FRO.FLORA_NONE,
 					"adyacent_to": {
 						"type": "building",
 						"id": FRO.BUILDING_CITY
