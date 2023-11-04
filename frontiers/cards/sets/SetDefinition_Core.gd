@@ -15,6 +15,7 @@ const CARDS := {
 			"type": "place_tile",
 			"tile": {
 				"layer": "terrain",
+				"food_distance": true,
 				"type": FRO.TERRAIN_GRASS,
 				"name": "Grassland",
 				"rules": {
@@ -40,6 +41,7 @@ const CARDS := {
 			"type": "place_tile",
 			"tile": {
 				"layer": "terrain",
+				"food_distance": true,
 				"type": FRO.TERRAIN_HILLS,
 				"name": "Hills",
 				"rules": {
@@ -65,6 +67,7 @@ const CARDS := {
 			"type": "place_tile",
 			"tile": {
 				"layer": "building",
+				"food_distance": true,
 				"type": FRO.BUILDING_FARM,
 				"name": "Farm",
 				"rules": {
@@ -92,6 +95,7 @@ const CARDS := {
 			"type": "place_tile",
 			"tile": {
 				"layer": "effect",
+				"food_distance": true,
 				"flora": FRO.TERRAIN_NONE,
 				"resources": {
 					"wood" : 5
@@ -106,14 +110,14 @@ const CARDS := {
 		},
 	},
 	"Settler": {
-		"Tags": [""],
+		"Tags": ["WIP"],
 		"Requirements": "Must not be adyacent to another city.",
 		"Abilities": "Founds a city.",
 		"Cost": 2,
 		"Resources": "",
 	},
 	"Observatory": {
-		"Tags": [""],
+		"Tags": ["WIP"],
 		"Requirements": "Must be on hills.",
 		"Abilities": "Produces science.",
 		"Cost": 1,

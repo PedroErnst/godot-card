@@ -66,17 +66,17 @@ __meta__ = {
 }
 
 [node name="Instructions" type="Label" parent="."]
-margin_left = 576.0
+margin_left = 521.0
 margin_top = 15.0
-margin_right = 660.0
+margin_right = 724.0
 margin_bottom = 29.0
 custom_styles/normal = SubResource( 3 )
-text = "Place the tile"
+text = "Place the tile (food costs in red)"
 
 [node name="Cancel" type="Button" parent="."]
-margin_left = 722.0
+margin_left = 749.0
 margin_top = 13.0
-margin_right = 776.0
+margin_right = 803.0
 margin_bottom = 33.0
 text = "Cancel"
 

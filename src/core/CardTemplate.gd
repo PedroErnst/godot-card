@@ -447,7 +447,6 @@ func _on_Card_gui_input(event) -> void:
 		# gui input, is actually the one with the highest index.
 		# We use our mouse pointer which is tracking this info.
 		var is_picking = cfc.NMAP.board.is_picking_cards
-		print(is_picking)
 		if cfc.NMAP.board.mouse_pointer.current_focused_card \
 				and self != cfc.NMAP.board.mouse_pointer.current_focused_card:
 			cfc.NMAP.board.mouse_pointer.current_focused_card._on_Card_gui_input(event)
@@ -455,10 +454,11 @@ func _on_Card_gui_input(event) -> void:
 		# or a long click
 		elif event.is_pressed() \
 				and event.get_button_index() == 1 \
-				and is_picking == false \
 				and not buttons.are_hovered() \
 				and not tokens.are_hovered():
-			if ((check_play_costs() != CFConst.CostsState.IMPOSSIBLE
+			if is_picking:
+				cfc.NMAP.board.pickCard(self)
+			elif ((check_play_costs() != CFConst.CostsState.IMPOSSIBLE
 					and get_state_exec() == "hand")
 					or get_state_exec() == "board"):
 				cfc.card_drag_ongoing = null

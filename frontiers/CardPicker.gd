@@ -13,12 +13,18 @@ func addCardPick(level: int)-> void:
 
 func pickCards()-> void:
 	if queued_picks.empty():
-		cfc.NMAP.board.is_picking_cards = false
 		return;
 		
+	yield(get_tree().create_timer(0.5), "timeout")
+	cfc.NMAP.board.is_picking_cards = true
 	popup_centered()
 	addCardsToChoices()
 	
+func pickCard(card: Card)->void:
+	for available_card in $CardChoices.get_all_cards():
+		if available_card == card:
+			card.move_to(cfc.NMAP.discard)
+	resetAndClose()
 
 func addCardsToChoices()-> void:
 	var defs = cfc.load_card_definitions()
@@ -42,6 +48,9 @@ func addCardsToChoices()-> void:
 
 
 func _on_SkipButton_pressed():
+	resetAndClose()
+
+func resetAndClose():
 	for card in $ChoicePile.get_all_cards():
 		$CardChoices.remove_child(card)
 	cfc.NMAP.board.is_picking_cards = false

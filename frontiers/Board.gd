@@ -50,6 +50,9 @@ func startTurn() -> void:
 
 func addCardPick(level: int)-> void:
 	$CardPicker.addCardPick(level)
+	
+func pickCard(card: Card)->void:
+	$CardPicker.pickCard(card)
 
 # This function is to avoid relating the logic in the card objects
 # to a node which might not be there in another game

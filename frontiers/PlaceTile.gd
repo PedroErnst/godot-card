@@ -17,6 +17,9 @@ func askToPlaceTile(tileDefinition: Dictionary) -> void:
 	tileToPlace = tileDefinition
 	awaiting_placement = true
 	show()
+	var tiles = cfc.NMAP.board.get_node("TileRegister")
+	if 'food_distance' in tileDefinition:
+		tiles.displayFoodCosts()
 
 func _on_Cancel_pressed():
 	close(false)
@@ -27,6 +30,13 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 	if not tiles.coordWithinBounds(tilePos):
 		showError("Outside of the map!")
 		return false
+		
+	if 'food_distance' in definition:
+		var required = tiles.distanceToClosestCity(tilePos) - 1
+		var available = cfc.NMAP.board.get_node("Counters").get_counter("food")
+		if available < required:
+			showError("Need " + str(required) + " food to reach this location")
+			return false
 	
 	var tileAtLocation = tiles.getTileAt(tilePos)
 	if "rules" in definition:
@@ -101,6 +111,10 @@ func placeTile(tilePos: Vector2) -> void:
 		if "resources" in tileToPlace:
 			for resource in tileToPlace["resources"]:
 				counter.mod_counter(resource, tileToPlace["resources"][resource])
+		
+	if 'food_distance' in tileToPlace:
+		var required = tiles.distanceToClosestCity(tilePos) - 1
+		counter.mod_counter("food", -required)
 
 func checkSuccessful() -> void:
 	awaiting_placement = false
@@ -110,6 +124,8 @@ func checkSuccessful() -> void:
 func close(code: bool) -> void:
 	awaiting_placement = false
 	tileToPlace = null
+	var tiles = cfc.NMAP.board.get_node("TileRegister")
+	tiles.clearTileLabels()
 	emit_signal("tile_placement_exited", code)
 	hide()
 
