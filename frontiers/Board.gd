@@ -16,6 +16,7 @@ func _ready() -> void:
 		cfc.game_rng_seed = CFUtils.generate_random_seed()
 		$SeedLabel.text = "Game Seed is: " + cfc.game_rng_seed
 	loadInitialCards()
+	$Counters.mod_counter("food", 1, true)
 		
 	$TileRegister.setUp()
 	
@@ -38,11 +39,15 @@ func incomePhase()-> void:
 			$Counters.mod_counter("wood", 1)
 	$Counters.mod_counter("credits", 3, true)
 
+func onCardPlayComplete()-> void:
+	$CardPicker.pickCards()
 
 func startTurn() -> void:
 	incomePhase()
 	cfc.NMAP.hand.drawFromDeck(5)
 
+func addCardPick(level: int)-> void:
+	$CardPicker.addCardPick(level)
 
 # This function is to avoid relating the logic in the card objects
 # to a node which might not be there in another game

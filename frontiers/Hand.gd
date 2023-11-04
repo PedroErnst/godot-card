@@ -21,6 +21,7 @@ func playCard(card: Card) -> void:
 
 	payCosts(script)
 	card.move_to(cfc.NMAP.discard)
+	cfc.NMAP.board.onCardPlayComplete()
 
 func showError(text: String)-> void:
 	cfc.NMAP.board.get_node("Notification").showNotification(text, '', 3)

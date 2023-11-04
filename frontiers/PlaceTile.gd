@@ -80,6 +80,7 @@ func showError(text: String)-> void:
 func placeTile(tilePos: Vector2) -> void:
 	var tiles = cfc.NMAP.board.get_node("TileRegister")
 	var counter = cfc.NMAP.board.get_node("Counters")
+	var tileAtLocation = tiles.getTileAt(tilePos)
 	if tileToPlace.layer == "terrain":
 		tiles.setTileTerrain(tileToPlace.type, tilePos)
 		if "flora" in tileToPlace:
@@ -96,6 +97,7 @@ func placeTile(tilePos: Vector2) -> void:
 			var required = tiles.foodRequiredToGrowCityAt(tilePos)
 			counter.mod_counter('food', -required)
 			tiles.growCity(tilePos)
+			cfc.NMAP.board.addCardPick(tileAtLocation.city_size)
 		if "resources" in tileToPlace:
 			for resource in tileToPlace["resources"]:
 				counter.mod_counter(resource, tileToPlace["resources"][resource])
