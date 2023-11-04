@@ -1,6 +1,8 @@
 # Code for a sample playspace, you're expected to provide your own ;)
 extends Board
 
+var is_picking_cards = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	counters = $Counters

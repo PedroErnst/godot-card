@@ -1,4 +1,4 @@
-extends PopupPanel
+extends Popup
 
 
 var queued_picks = []
@@ -13,11 +13,12 @@ func addCardPick(level: int)-> void:
 
 func pickCards()-> void:
 	if queued_picks.empty():
+		cfc.NMAP.board.is_picking_cards = false
 		return;
 		
 	popup_centered()
-	return
 	addCardsToChoices()
+	
 
 func addCardsToChoices()-> void:
 	var defs = cfc.load_card_definitions()
@@ -33,6 +34,16 @@ func addCardsToChoices()-> void:
 		validOptions.remove(choice)
 		
 		var card = cfc.instance_card(chosenItem)
-		$CardChoices.add_child(card)
+		
+		$ChoicePile.add_child(card)
+		card.move_to($CardChoices)
 		card._determine_idle_state()
 		
+
+
+func _on_SkipButton_pressed():
+	for card in $ChoicePile.get_all_cards():
+		$CardChoices.remove_child(card)
+	cfc.NMAP.board.is_picking_cards = false
+	queued_picks = []
+	self.hide()

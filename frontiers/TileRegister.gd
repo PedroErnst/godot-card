@@ -15,7 +15,7 @@ var register = {}
 var city_count = 0
 
 func setUp()-> void:
-	var startingTile = Vector2(5.0, 2.0)
+	var startingTile = Vector2(11.0, 3.0)
 	setTileTerrain(2, startingTile)
 	createCity(startingTile)
 	
