@@ -35,7 +35,7 @@ const CARDS := {
 		"Requirements": "",
 		"Starting Cards": 1,
 		"Abilities": "Send scouts to explore hill terrain.",
-		"Cost": 2,
+		"Cost": 1,
 		"Resources": "",
 		"script": {
 			"type": "place_tile",
@@ -52,7 +52,73 @@ const CARDS := {
 				}
 			},
 			"costs": {
+				"credits": 1,
+			},
+		},
+	},
+	"Mountains": {
+		"Tags": ["WIP"],
+		"Requirements": "",
+		"Abilities": "Send scouts to explore mountain terrain.",
+		"Cost": 2,
+		"Resources": "",
+		"script": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "terrain",
+				"food_distance": true,
+				"type": FRO.TERRAIN_MOUNTAIN,
+				"name": "Mountains",
+				"rules": {
+					"terrain_type": FRO.TERRAIN_NONE,
+				},
+			},
+			"costs": {
 				"credits": 2,
+			},
+		},
+	},
+	"Lake": {
+		"Tags": ["WIP"],
+		"Requirements": "",
+		"Abilities": "Send scouts to explore a lake.",
+		"Cost": 1,
+		"Resources": "",
+		"script": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "terrain",
+				"food_distance": true,
+				"type": FRO.TERRAIN_WATER,
+				"name": "Lake",
+				"rules": {
+					"terrain_type": FRO.TERRAIN_NONE,
+				},
+			},
+			"costs": {
+				"credits": 1,
+			},
+		},
+	},
+	"Swamp": {
+		"Tags": ["WIP"],
+		"Requirements": "",
+		"Abilities": "Send scouts to explore a swamp.",
+		"Cost": 1,
+		"Resources": "",
+		"script": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "terrain",
+				"food_distance": true,
+				"type": FRO.TERRAIN_MARSH,
+				"name": "Swamp",
+				"rules": {
+					"terrain_type": FRO.TERRAIN_NONE,
+				},
+			},
+			"costs": {
+				"credits": 1,
 			},
 		},
 	},
@@ -122,6 +188,33 @@ const CARDS := {
 		"Abilities": "Produces science.",
 		"Cost": 1,
 		"Resources": "Wood: 5",
+	},
+	"Windmill": {
+		"Tags": ["WIP"],
+		"Requirements": "Must be adyacent to farms.",
+		"Abilities": "Produces 1 food for each adyacent farm.",
+		"Cost": 1,
+		"Resources": "Wood: 10",
+		"script": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "building",
+				"food_distance": true,
+				"type": FRO.BUILDING_WINDMILL,
+				"name": "Farm",
+				"rules": {
+					"terrain_type": FRO.TERRAIN_GRASS,
+					"flora_type": FRO.FLORA_NONE,
+					"adyacent_to": {
+						"type": "building",
+						"id": FRO.BUILDING_FARM
+					},
+				},
+			},
+			"costs": {
+				"credits": 1,
+			},
+		},
 	},
 	"Grow City": {
 		"Tags": ["Basic"],

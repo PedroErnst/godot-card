@@ -35,6 +35,8 @@ func addCardsToChoices()-> void:
 	for item in 3:
 		if validOptions.size() == 0:
 			break
+			
+		yield(get_tree().create_timer(0.2), "timeout")
 		var choice = randi() % validOptions.size()
 		var chosenItem = validOptions[choice]
 		validOptions.remove(choice)
@@ -42,8 +44,8 @@ func addCardsToChoices()-> void:
 		var card = cfc.instance_card(chosenItem)
 		
 		$ChoicePile.add_child(card)
-		card.move_to($CardChoices)
 		card._determine_idle_state()
+		card.move_to($CardChoices)
 		
 
 

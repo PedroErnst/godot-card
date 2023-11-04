@@ -48,6 +48,7 @@ func displayFoodCosts()-> void:
 func clearTileLabels()-> void:
 	for label in tileLabels:
 		remove_child(label)
+	tileLabels = []
 	
 func displayTileLabels(type: int, xOff: float = 0, yOff: float = 0)-> void:
 	for coord in getTrackedCoords():
