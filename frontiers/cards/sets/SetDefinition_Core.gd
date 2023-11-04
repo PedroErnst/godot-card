@@ -15,13 +15,13 @@ const CARDS := {
 			"type": "place_tile",
 			"tile": {
 				"layer": "terrain",
-				"type": 2,
+				"type": FRO.TERRAIN_GRASS,
 				"name": "Grassland",
 				"rules": {
-					"terrain_type": -1,
+					"terrain_type": FRO.TERRAIN_NONE,
 				},
 				"flora": {
-					9: 30
+					FRO.FLORA_FOREST: 30
 				}
 			},
 			"costs": {
@@ -40,13 +40,13 @@ const CARDS := {
 			"type": "place_tile",
 			"tile": {
 				"layer": "terrain",
-				"type": 3,
+				"type": FRO.TERRAIN_HILLS,
 				"name": "Hills",
 				"rules": {
-					"terrain_type": -1,
+					"terrain_type": FRO.TERRAIN_NONE,
 				},
 				"flora": {
-					9: 60
+					FRO.FLORA_FOREST: 60
 				}
 			},
 			"costs": {
@@ -65,13 +65,13 @@ const CARDS := {
 			"type": "place_tile",
 			"tile": {
 				"layer": "building",
-				"type": 7,
+				"type": FRO.BUILDING_FARM,
 				"name": "Farm",
 				"rules": {
-					"terrain_type": 2,
+					"terrain_type": FRO.TERRAIN_GRASS,
 					"adyacent_to": {
 						"type": "building",
-						"id": 6
+						"id": FRO.BUILDING_CITY
 					},
 				},
 			},
@@ -91,12 +91,12 @@ const CARDS := {
 			"type": "place_tile",
 			"tile": {
 				"layer": "effect",
-				"flora": -1,
+				"flora": FRO.TERRAIN_NONE,
 				"resources": {
 					"wood" : 5
 				},
 				"rules": {
-					"flora_type": 9,
+					"flora_type": FRO.FLORA_FOREST,
 				},
 			},
 			"costs": {

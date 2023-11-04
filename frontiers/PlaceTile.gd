@@ -65,7 +65,7 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 	var adyacentTiles = tiles.getAdyacentTiles(tilePos)
 	var anyAdyacentExists = false
 	for adyacent in adyacentTiles:
-		if adyacent.terrain_type >= 0:
+		if adyacent.terrain_type >= FRO.TERRAIN_NONE:
 			anyAdyacentExists = true
 			
 	if not anyAdyacentExists and tileAtLocation.terrain_type < 0:
