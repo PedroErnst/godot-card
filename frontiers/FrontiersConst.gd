@@ -2,11 +2,21 @@
 class_name FRO
 extends SP
 
+const PLAYER = 1
+const ENEMY = 2
+
 const TILE_SIZE_X = 54
 const TILE_SIZE_Y = 72
 
 const MAP_LIMIT_X = 22
 const MAP_LIMIT_Y = 5
+
+const ENEMY_SPAWN_BASE_CHANCE = 33
+const MIN_SPAWN_RANGE = 'min_spawn_range'
+const SPAWN_WEIGHT = 'spawn_weight'
+const HIT_POINTS = 'hit_points'
+const MOVEMENT = 'movement'
+const DAMAGE = 'damage'
 
 const TERRAIN_NONE = -1
 const TERRAIN_GRASS = 2

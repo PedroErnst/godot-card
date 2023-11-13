@@ -88,6 +88,7 @@ const PATH_CORE := "res://src/core/"
 # The path where scenes and scripts customized for this specific game exist
 # (e.g. board, card back etc)
 const PATH_CUSTOM := "res://frontiers/"
+const PATH_UNITS = "res://frontiers/units/"
 # The path where card template scenes exist.
 # These is usually one scene per type of card in the game
 const PATH_CARDS := PATH_CUSTOM + "cards/"

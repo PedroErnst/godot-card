@@ -1,6 +1,7 @@
 extends Control
 
 const Tile = preload("res://frontiers/Tile.gd")
+var UNIT_DEFINITIONS = preload("res://frontiers/units/UnitDefinitions.gd").UNIT_DEFINITIONS
 
 signal tile_clicked
 signal right_clicked
@@ -9,6 +10,7 @@ class_name TileRegister
 
 const DISPLAY_COORDS = 1
 const DISPLAY_FOOD_COST = 2
+const START_TILE = Vector2(11.0, 3.0)
 
 var register = {}
 var city_count = 0
@@ -19,14 +21,29 @@ var maxX = -999
 var minY = 999
 var maxY = -999
 
+func allCitiesDestroyed() -> bool:
+	for coord in getTrackedCoords():
+		if getTileAt(coord).city_size > 0:
+			return false
+	return true
+
 func getTrackedCoords()-> Array:
 	return trackedCoords
 
 func setUp()-> void:
-	var startingTile = Vector2(11.0, 3.0)
-	setTileTerrain(2, startingTile)
-	createCity(startingTile)
+	setTileTerrain(2, START_TILE)
+	createCity(START_TILE)
 	
+func endTurn() -> void:
+	for unit in $Units.get_children():
+		if unit.faction == FRO.ENEMY:
+			if unit.damage > 0:
+				if attackAtPosition(unit):
+					continue
+			if unit.movement > 0:
+				if moveUnitOneStepCloserTo(unit, START_TILE):
+					continue
+
 func createCity(coord: Vector2)-> void:
 	setTileBuilding(6, coord)
 	var tile = getTileAt(coord)
@@ -133,7 +150,56 @@ func setTileTerrain(terrain_type: int, coord: Vector2) -> void:
 	tile.terrain_type = terrain_type
 	setTileAt(coord, tile)
 	$Tiles.set_cellv(coord, terrain_type)
+	
+func postTileReveal(coord: Vector2)-> void:
+	spawnEnemiesIfNeeded(coord)
 
+func spawnEnemiesIfNeeded(coord: Vector2) -> void:
+	if rand_range(0, 100) > FRO.ENEMY_SPAWN_BASE_CHANCE:
+		return
+	var weight = -1.0
+	var chosen = ''
+	for key in UNIT_DEFINITIONS:
+		var unit = UNIT_DEFINITIONS[key]
+		if tileDistance(coord, START_TILE) < unit[FRO.MIN_SPAWN_RANGE]:
+			continue
+		var roll = rand_range(0.0, 100.0) * unit[FRO.SPAWN_WEIGHT]
+		if roll > weight:
+			weight = roll
+			chosen = key
+	if weight < 0.0:
+		return
+	spawnUnit(coord, chosen, UNIT_DEFINITIONS[chosen], FRO.ENEMY)
+
+func spawnUnit(coord: Vector2, unitName: String, def: Dictionary, faction: int) -> void:
+	var unitPath = CFConst.PATH_UNITS + unitName + ".tscn"
+	var template = load(unitPath)
+	var unit = template.instance()
+	$Units.add_child(unit)
+	unit.init(faction, UNIT_DEFINITIONS[unitName])
+	setUnitPosition(unit, coord)
+
+func moveUnitOneStepCloserTo(unit: Unit, target: Vector2) -> bool:
+	var currentDist = tileDistance(unit.tileLocation, target)
+	for coord in getAdyacentCoords(unit.tileLocation):
+		if tileDistance(coord, target) < currentDist:
+			setUnitPosition(unit, coord)
+			return true
+	return false
+
+func attackAtPosition(unit: Unit) -> bool:
+	var coord = unit.tileLocation
+	var building = getTileBuilding(coord)
+	var tile = getTileAt(coord)
+	if building == FRO.BUILDING_NONE:
+		return false
+	setTileBuilding(FRO.BUILDING_NONE, coord)
+	tile.city_size = 0
+	return true
+	
+func setUnitPosition(unit: Unit, coord: Vector2) -> void:
+	unit.position = tileCenter(tileToPixel(coord))
+	unit.tileLocation = coord
 
 func setTileFlora(flora_type: int, coord: Vector2) -> void:
 	var tile = getTileAt(coord)
@@ -146,6 +212,10 @@ func setTileBuilding(building_type: int, coord: Vector2) -> void:
 	tile.building_type = building_type
 	setTileAt(coord, tile)
 	$Buildings.set_cellv(coord, building_type)
+	
+func getTileBuilding(coord: Vector2) -> int:
+	var tile = getTileAt(coord)
+	return tile.building_type
 
 func _input(ev):
 	if ev is InputEventMouseButton and ev.button_index == BUTTON_LEFT and ev.pressed:
@@ -187,6 +257,9 @@ func tileToPixel(tile: Vector2) -> Vector2:
 		pixelY += (FRO.TILE_SIZE_Y / 2)
 	
 	return Vector2(pixelX, pixelY)
+
+func tileCenter(pixelCoord: Vector2) -> Vector2:
+	return Vector2(pixelCoord.x + (FRO.TILE_SIZE_X / 2), pixelCoord.y + (FRO.TILE_SIZE_Y / 2))
 	
 func coordWithinBounds(coord: Vector2) -> bool:
 	if coord.x < 0 or coord.x > FRO.MAP_LIMIT_X:
@@ -217,3 +290,4 @@ func axial_distance(a: Vector2, b: Vector2)-> int:
 		  + abs(vec.x + vec.y)
 		  + abs(vec.y)) / 2
 	return int(floatVal)
+

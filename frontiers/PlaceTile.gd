@@ -98,6 +98,7 @@ func placeTile(tilePos: Vector2) -> void:
 				if rand_range(0, 100) < tileToPlace.flora[key]:
 					tiles.setTileFlora(key, tilePos)
 					break
+		tiles.postTileReveal(tilePos)
 	elif tileToPlace.layer == "building":
 		tiles.setTileBuilding(tileToPlace.type, tilePos)
 	elif tileToPlace.layer == "effect":

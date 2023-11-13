@@ -309,11 +309,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://frontiers/Tile.gd"
 }, {
-"base": "Control",
-"class": "TileRegister",
-"language": "GDScript",
-"path": "res://frontiers/TileRegister.gd"
-}, {
 "base": "HBoxContainer",
 "class": "Token",
 "language": "GDScript",
@@ -328,6 +323,11 @@ _global_script_classes=[ {
 "class": "UTCommon",
 "language": "GDScript",
 "path": "res://tests/UTcommon.gd"
+}, {
+"base": "Node2D",
+"class": "Unit",
+"language": "GDScript",
+"path": "res://frontiers/units/Unit.gd"
 }, {
 "base": "Node2D",
 "class": "ViewportCardFocus",
@@ -400,10 +400,10 @@ _global_script_class_icons={
 "SetPreload": "",
 "TargetingArrow": "",
 "Tile": "",
-"TileRegister": "",
 "Token": "",
 "TokenDrawer": "",
 "UTCommon": "",
+"Unit": "",
 "ViewportCardFocus": "",
 "perMessage": ""
 }

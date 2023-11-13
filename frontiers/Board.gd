@@ -2,6 +2,8 @@
 extends Board
 
 var is_picking_cards = false
+var game_over = false
+var turn_counter = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,8 +29,17 @@ func _ready() -> void:
 	$DeckBuilderPopup.connect('popup_hide', self, '_on_DeckBuilder_hide')
 
 func endTurn() -> void:
+	if game_over:
+		return
 	cfc.NMAP.hand.discardHand()
+	$TileRegister.endTurn()
+	if $TileRegister.allCitiesDestroyed():
+		$GameOver.visible = true
+		$GameOver.text = "Game over!! Your people survived for " + str(turn_counter) + " years."
+		game_over = true
+		return
 	startTurn()
+	turn_counter += 1
 
 
 func incomePhase()-> void:

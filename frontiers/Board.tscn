@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://frontiers/Deck.gd" type="Script" id=1]
 [ext_resource path="res://src/core/Pile.tscn" type="PackedScene" id=2]
@@ -23,6 +23,8 @@
 [ext_resource path="res://frontiers/CardPicker.gd" type="Script" id=21]
 [ext_resource path="res://frontiers/CardPickerChoices.gd" type="Script" id=22]
 [ext_resource path="res://frontiers/CardPickerChoices.tscn" type="PackedScene" id=23]
+[ext_resource path="res://frontiers/Units.gd" type="Script" id=24]
+[ext_resource path="res://BigFont.tres" type="DynamicFont" id=25]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -561,6 +563,9 @@ centered_textures = true
 format = 1
 script = ExtResource( 17 )
 
+[node name="Units" type="Node" parent="TileRegister"]
+script = ExtResource( 24 )
+
 [node name="Notification" type="Label" parent="."]
 margin_left = 97.0
 margin_top = 8.0
@@ -614,6 +619,21 @@ margin_top = -325.0
 margin_right = 97.5
 margin_bottom = -298.0
 text = "Skip"
+
+[node name="GameOver" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -343.0
+margin_top = -29.0
+margin_right = 343.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 25 )
+text = "Game over! Your people survived for 0 days"
+align = 1
+valign = 1
 
 [connection signal="button_down" from="EndTurn" to="EndTurn" method="_on_EndTurn_button_down"]
 [connection signal="right_clicked" from="TileRegister" to="PlaceTile" method="_on_TileRegister_right_clicked"]
