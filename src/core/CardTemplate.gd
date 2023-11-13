@@ -194,9 +194,9 @@ export var play_area_scale := CFConst.PLAY_AREA_SCALE
 # the size of the card when seen smaller (usually in a card-grid of selection window)
 export var thumbnail_scale := CFConst.THUMBNAIL_SCALE
 # The size of the card when seen a thumbnail is moused-over
-export var preview_scale := CFConst.PREVIEW_SCALE
+export var preview_scale := CFConst.HAND_SCALE
 # The size of the card when seen larger in the viewport focus window
-export var focused_scale := CFConst.FOCUSED_SCALE
+export var focused_scale := CFConst.PREVIEW_SCALE
 
 # This is **the** authorative name for this node
 #
@@ -2205,9 +2205,7 @@ func _process_card_state() -> void:
 			buttons.set_active(false)
 			# warning-ignore:return_value_discarded
 			set_card_rotation(0,false,false)
-			if not $Tween.is_active() and \
-					not _focus_completed and \
-					cfc.game_settings.focus_style != CFInt.FocusStyle.VIEWPORT:
+			if false:
 				var expected_position: Vector2 = recalculate_position()
 				var expected_rotation: float = _recalculate_rotation()
 				# We figure out our neighbours by their index
@@ -2257,7 +2255,7 @@ func _process_card_state() -> void:
 				# We make sure to remove other tweens of the same type
 				# to avoid a deadlock
 				_add_tween_position(expected_position, _target_position, focus_tween_duration)
-				_add_tween_scale(scale, Vector2(1.5,1.5), focus_tween_duration)
+				_add_tween_scale(scale, Vector2(1.0,1.0), focus_tween_duration)
 
 				if cfc.game_settings.hand_use_oval_shape:
 					_add_tween_rotation($Control.rect_rotation, 0, focus_tween_duration)

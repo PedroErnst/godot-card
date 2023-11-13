@@ -128,7 +128,7 @@ const PATH_MOUSE_POINTER := PATH_CORE + "MousePointer.tscn"
 # The amount of distance neighboring cards are pushed during card focus
 #
 # It's based on the card width. Bigger percentage means larger push.
-const NEIGHBOUR_PUSH := 0.25
+const NEIGHBOUR_PUSH := 0.0
 # The scale of a card while on the play area
 # You can adjust this for each different card type
 const PLAY_AREA_SCALE := 0.5
@@ -141,6 +141,8 @@ const PREVIEW_SCALE := 1.5
 # The scale of a card while it's shown focused on the top right.
 # You can adjust this for each different card type
 const FOCUSED_SCALE := 1.5
+#Size of the card in hand
+const HAND_SCALE := 0.5
 # The margin towards the bottom of the viewport on which to draw the cards.
 #
 # More than 0 and the card will appear hidden under the display area.

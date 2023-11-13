@@ -5,12 +5,10 @@ func _ready() -> void:
 	# Map your card text label layout here. We use this when scaling
 	# The card or filling up its text
 	card_labels["Name"] = find_node("Name")
-	card_labels["Type"] = find_node("Type")
 	card_labels["Tags"] = find_node("Tags")
 	card_labels["Requirements"] = find_node("Requirements")
 	card_labels["Abilities"] = find_node("Abilities")
 	card_labels["Cost"] = find_node("Cost")
-	card_labels["Power"] = find_node("Power")
 	card_labels["Resources"] = find_node("Resources")
 
 	# These set te max size of each label. This is used to calculate how much
