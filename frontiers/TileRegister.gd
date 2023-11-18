@@ -77,7 +77,7 @@ func displayTileLabels(type: int, xOff: float = 0, yOff: float = 0)-> void:
 			if cost < 1:
 				continue
 			name_label.text = str(cost - 1)
-		var pos = tileToPixel(coord)
+		var pos = Grid.tileToPixel(coord)
 		pos.y += FRO.TILE_SIZE_Y / 3
 		pos.y += yOff
 		pos.x += xOff
@@ -90,32 +90,6 @@ func foodRequiredToGrowCityAt(coord: Vector2)-> int:
 	var tile = getTileAt(coord)
 	return tile.city_size * tile.city_size
 
-func getAdyacentCoords(coord: Vector2) -> Array:
-	var coords = []
-	if (int(coord.x) % 2): 
-		coords.append(Vector2(coord.x, coord.y - 1))
-		coords.append(Vector2(coord.x + 1, coord.y))
-		coords.append(Vector2(coord.x + 1, coord.y + 1))
-		coords.append(Vector2(coord.x, coord.y + 1))
-		coords.append(Vector2(coord.x - 1, coord.y + 1))
-		coords.append(Vector2(coord.x - 1, coord.y))
-	else:
-		coords.append(Vector2(coord.x, coord.y - 1))
-		coords.append(Vector2(coord.x + 1, coord.y - 1))
-		coords.append(Vector2(coord.x + 1, coord.y))
-		coords.append(Vector2(coord.x, coord.y + 1))
-		coords.append(Vector2(coord.x - 1, coord.y))
-		coords.append(Vector2(coord.x - 1, coord.y - 1))
-	return coords
-
-func getAdyacentTiles(coord: Vector2) -> Array:
-	var adyacents = []
-	for adyacent in getAdyacentCoords(coord):
-		if coordWithinBounds(adyacent):
-			adyacents.append(getTileAt(adyacent))
-
-	return adyacents
-
 func getTileAt(coord: Vector2)-> Tile:
 	var key = coord.x * 1000 + coord.y
 	if not key in register:
@@ -123,6 +97,14 @@ func getTileAt(coord: Vector2)-> Tile:
 		register[key].location = coord
 	
 	return register[key]
+
+func getAdyacentTiles(coord: Vector2) -> Array:
+	var adyacents = []
+	for adyacent in Grid.getAdyacentCoords(coord):
+		if Grid.coordWithinBounds(adyacent):
+			adyacents.append(getTileAt(adyacent))
+
+	return adyacents
 
 func allTiles()-> Array:
 	return register.values()
@@ -135,7 +117,7 @@ func setTileAt(coord: Vector2, tile: Tile)-> void:
 func updateTrackedCoords(coord: Vector2)-> void:
 	if not isTrackedCoord(coord):
 		trackedCoords.append(coord)
-	for adyacent in getAdyacentCoords(coord):
+	for adyacent in Grid.getAdyacentCoords(coord):
 		if not isTrackedCoord(adyacent):
 			trackedCoords.append(adyacent)
 	
@@ -161,7 +143,7 @@ func spawnEnemiesIfNeeded(coord: Vector2) -> void:
 	var chosen = ''
 	for key in UNIT_DEFINITIONS:
 		var unit = UNIT_DEFINITIONS[key]
-		if tileDistance(coord, START_TILE) < unit[FRO.MIN_SPAWN_RANGE]:
+		if Grid.tileDistance(coord, START_TILE) < unit[FRO.MIN_SPAWN_RANGE]:
 			continue
 		var roll = rand_range(0.0, 100.0) * unit[FRO.SPAWN_WEIGHT]
 		if roll > weight:
@@ -177,13 +159,13 @@ func spawnUnit(coord: Vector2, unitName: String, def: Dictionary, faction: int) 
 	var unit = template.instance()
 	$Units.add_child(unit)
 	unit.init(faction, UNIT_DEFINITIONS[unitName])
-	setUnitPosition(unit, coord)
+	instantMoveUnitTo(unit, coord)
 
 func moveUnitOneStepCloserTo(unit: Unit, target: Vector2) -> bool:
-	var currentDist = tileDistance(unit.tileLocation, target)
-	for coord in getAdyacentCoords(unit.tileLocation):
-		if tileDistance(coord, target) < currentDist:
-			setUnitPosition(unit, coord)
+	var currentDist = Grid.tileDistance(unit.tileLocation, target)
+	for coord in Grid.getAdyacentCoords(unit.tileLocation):
+		if Grid.tileDistance(coord, target) < currentDist:
+			moveUnitTo(unit, coord)
 			return true
 	return false
 
@@ -196,9 +178,14 @@ func attackAtPosition(unit: Unit) -> bool:
 	setTileBuilding(FRO.BUILDING_NONE, coord)
 	tile.city_size = 0
 	return true
+
+func moveUnitTo(unit: Unit, coord: Vector2) -> void:
+	var tween = create_tween()
+	tween.tween_property(unit, 'position', Grid.tileCenter(Grid.tileToPixel(coord)), 1)
+	unit.tileLocation = coord
 	
-func setUnitPosition(unit: Unit, coord: Vector2) -> void:
-	unit.position = tileCenter(tileToPixel(coord))
+func instantMoveUnitTo(unit: Unit, coord: Vector2) -> void:
+	unit.position = Grid.tileCenter(Grid.tileToPixel(coord))
 	unit.tileLocation = coord
 
 func setTileFlora(flora_type: int, coord: Vector2) -> void:
@@ -219,7 +206,7 @@ func getTileBuilding(coord: Vector2) -> int:
 
 func _input(ev):
 	if ev is InputEventMouseButton and ev.button_index == BUTTON_LEFT and ev.pressed:
-		var tilePos = pixelToTileCoord(ev.global_position)
+		var tilePos = Grid.pixelToTileCoord(ev.global_position)
 		print(tilePos)
 		print(distanceToClosestCity(tilePos))
 		emit_signal("tile_clicked", tilePos)
@@ -231,63 +218,8 @@ func distanceToClosestCity(target: Vector2)-> int:
 	for key in register:
 		if register[key].city_size < 1:
 			continue
-		var dist = tileDistance(target, register[key].location)
+		var dist = Grid.tileDistance(target, register[key].location)
 		if dist < closestDistance:
 			closestDistance = dist
 	return closestDistance
-
-
-func pixelToTileCoord(pixel: Vector2) -> Vector2:
-	var tileX = pixel.x / FRO.TILE_SIZE_X
-	var yVal = pixel.y
-	print(int(tileX) % 2)
-	if int(tileX) % 2:
-		yVal -= (FRO.TILE_SIZE_Y / 2)
-	var tileY = yVal / FRO.TILE_SIZE_Y
-	
-	tileX = floor(tileX)
-	tileY = floor(tileY)
-	
-	return Vector2(tileX, tileY)
-
-func tileToPixel(tile: Vector2) -> Vector2:
-	var pixelX = tile.x * FRO.TILE_SIZE_X
-	var pixelY = tile.y * FRO.TILE_SIZE_Y
-	if int(tile.x) % 2:
-		pixelY += (FRO.TILE_SIZE_Y / 2)
-	
-	return Vector2(pixelX, pixelY)
-
-func tileCenter(pixelCoord: Vector2) -> Vector2:
-	return Vector2(pixelCoord.x + (FRO.TILE_SIZE_X / 2), pixelCoord.y + (FRO.TILE_SIZE_Y / 2))
-	
-func coordWithinBounds(coord: Vector2) -> bool:
-	if coord.x < 0 or coord.x > FRO.MAP_LIMIT_X:
-		return false
-	if coord.y < 0 or coord.y > FRO.MAP_LIMIT_Y:
-		return false
-	return true
-	
-func axial_to_oddq(hex: Vector2)-> Vector2:
-	var col = hex.x
-	var row = hex.y + (hex.x - (int(hex.x) % 2)) / 2
-	return Vector2(col, row)
-
-func oddq_to_axial(hex: Vector2)-> Vector2:
-	var q = hex.x
-	var r = hex.y - (hex.x - (int(hex.x) % 2)) / 2
-	return Vector2(q, r)
-	
-func tileDistance(a: Vector2, b: Vector2)-> int:
-	return axial_distance(oddq_to_axial(a), oddq_to_axial(b))
-	
-func axial_subtract(a: Vector2, b: Vector2)-> Vector2:
-	return Vector2(a.x - b.x, a.y - b.y)
-
-func axial_distance(a: Vector2, b: Vector2)-> int:
-	var vec = axial_subtract(a, b)
-	var floatVal = (abs(vec.x)
-		  + abs(vec.x + vec.y)
-		  + abs(vec.y)) / 2
-	return int(floatVal)
-
+#

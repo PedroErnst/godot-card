@@ -27,7 +27,7 @@ func _on_Cancel_pressed():
 func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 	var tiles = cfc.NMAP.board.get_node("TileRegister")
 	
-	if not tiles.coordWithinBounds(tilePos):
+	if not Grid.coordWithinBounds(tilePos):
 		showError("Outside of the map!")
 		return false
 		
@@ -130,7 +130,6 @@ func close(code: bool) -> void:
 	emit_signal("tile_placement_exited", code)
 	hide()
 
-
 func _on_TileRegister_tile_clicked(tilePos: Vector2)-> void:
 	if not awaiting_placement:
 		return
@@ -140,7 +139,6 @@ func _on_TileRegister_tile_clicked(tilePos: Vector2)-> void:
 
 	placeTile(tilePos)
 	close(true)
-
 
 func _on_TileRegister_right_clicked():
 	close(false)

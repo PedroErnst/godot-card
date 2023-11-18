@@ -12,6 +12,7 @@ const MAP_LIMIT_X = 22
 const MAP_LIMIT_Y = 5
 
 const ENEMY_SPAWN_BASE_CHANCE = 33
+#const ENEMY_SPAWN_BASE_CHANCE = 100
 const MIN_SPAWN_RANGE = 'min_spawn_range'
 const SPAWN_WEIGHT = 'spawn_weight'
 const HIT_POINTS = 'hit_points'
