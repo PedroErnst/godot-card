@@ -13,3 +13,9 @@ func init(factionKey: int, def: Dictionary) -> void:
 	hit_points = def[FRO.HIT_POINTS]
 	movement = def[FRO.MOVEMENT]
 	damage = def[FRO.DAMAGE]
+
+func onSpawn() -> void:
+	$Spawn.play()
+	
+func onDeath() -> void:
+	$Death.play()

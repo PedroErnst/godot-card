@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://frontiers/Deck.gd" type="Script" id=1]
 [ext_resource path="res://src/core/Pile.tscn" type="PackedScene" id=2]
@@ -23,8 +23,11 @@
 [ext_resource path="res://frontiers/CardPicker.gd" type="Script" id=21]
 [ext_resource path="res://frontiers/CardPickerChoices.gd" type="Script" id=22]
 [ext_resource path="res://frontiers/CardPickerChoices.tscn" type="PackedScene" id=23]
-[ext_resource path="res://frontiers/Units.gd" type="Script" id=24]
 [ext_resource path="res://BigFont.tres" type="DynamicFont" id=25]
+[ext_resource path="res://frontiers/Audio.gd" type="Script" id=26]
+[ext_resource path="res://frontiers/resource/sound/effects/swoosh.mp3" type="AudioStream" id=27]
+[ext_resource path="res://frontiers/resource/sound/effects/fail.mp3" type="AudioStream" id=28]
+[ext_resource path="res://frontiers/resource/sound/effects/switch.mp3" type="AudioStream" id=29]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -564,7 +567,8 @@ format = 1
 script = ExtResource( 17 )
 
 [node name="Units" type="Node" parent="TileRegister"]
-script = ExtResource( 24 )
+
+[node name="DeadUnits" type="Node" parent="TileRegister"]
 
 [node name="Notification" type="Label" parent="."]
 margin_left = 97.0
@@ -634,6 +638,18 @@ custom_fonts/font = ExtResource( 25 )
 text = "Game over! Your people survived for 0 days"
 align = 1
 valign = 1
+
+[node name="Audio" type="Node" parent="."]
+script = ExtResource( 26 )
+
+[node name="Swoosh" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 27 )
+
+[node name="Switch" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 29 )
+
+[node name="Fail" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 28 )
 
 [connection signal="button_down" from="EndTurn" to="EndTurn" method="_on_EndTurn_button_down"]
 [connection signal="right_clicked" from="TileRegister" to="PlaceTile" method="_on_TileRegister_right_clicked"]

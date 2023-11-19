@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://frontiers/resource/gfx/wesnoth/units/mummy/mummy.png" type="Texture" id=1]
+[ext_resource path="res://frontiers/resource/gfx/wesnoth/units/ogre/ogre.png" type="Texture" id=1]
 [ext_resource path="res://frontiers/units/Unit.gd" type="Script" id=2]
 
 [sub_resource type="SpriteFrames" id=1]
@@ -19,3 +19,7 @@ gravity_scale = 0.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
+
+[node name="Spawn" type="AudioStreamPlayer" parent="."]
+
+[node name="Death" type="AudioStreamPlayer" parent="."]

@@ -10,9 +10,9 @@ var city_size : int
 var label: Label
 
 func _init():
-	terrain_type = -1
-	building_type = -1
-	flora_type = -1
+	terrain_type = FRO.TERRAIN_NONE
+	building_type = FRO.BUILDING_NONE
+	flora_type = FRO.FLORA_NONE
 	city_size = 0
 	location = Vector2(-1001.0,-1001.0)
 

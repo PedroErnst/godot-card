@@ -2,7 +2,7 @@
 
 [ext_resource path="res://frontiers/units/Unit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://frontiers/resource/sound/effects/zombie-death1.mp3" type="AudioStream" id=2]
-[ext_resource path="res://frontiers/resource/sound/effects/zombie1.mp3" type="AudioStream" id=3]
+[ext_resource path="res://frontiers/resource/sound/effects/ogre.mp3" type="AudioStream" id=3]
 
 [node name="Node2D" instance=ExtResource( 1 )]
 

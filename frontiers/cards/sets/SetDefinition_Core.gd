@@ -238,4 +238,68 @@ const CARDS := {
 			},
 		},
 	},
+	"Militia Attack": {
+		"Tags": ["Basic"],
+		"Starting Cards": 1,
+		"Requirements": "Must use on an enemy.",
+		"Abilities": "Rally the town militia for an attack.",
+		"Cost": 3,
+		"Resources": "",
+		"script": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "effect",
+				"food_distance": true,
+				"damage": 1,
+				"rules": {
+					"enemy_unit": true,
+				},
+			},
+			"costs": {
+				"credits": 3,
+			},
+		},
+	},
+	"Trained Militia Attack": {
+		"Tags": ["WIP"],
+		"Requirements": "Must use on an enemy.",
+		"Abilities": "Rally the trained town militia for an attack.",
+		"Cost": 2,
+		"Resources": "",
+		"script": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "effect",
+				"food_distance": true,
+				"damage": 1,
+				"rules": {
+					"enemy_unit": true,
+				},
+			},
+			"costs": {
+				"credits": 2,
+			},
+		},
+	},
+	"Spearmen Militia Attack": {
+		"Tags": ["WIP"],
+		"Requirements": "Must use on an enemy.",
+		"Abilities": "Militia equipped with spears are deadlier.",
+		"Cost": 2,
+		"Resources": "",
+		"script": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "effect",
+				"food_distance": true,
+				"damage": 2,
+				"rules": {
+					"enemy_unit": true,
+				},
+			},
+			"costs": {
+				"credits": 2,
+			},
+		},
+	},
 }

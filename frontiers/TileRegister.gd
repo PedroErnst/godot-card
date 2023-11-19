@@ -43,6 +43,30 @@ func endTurn() -> void:
 			if unit.movement > 0:
 				if moveUnitOneStepCloserTo(unit, START_TILE):
 					continue
+	for deadUnit in $DeadUnits.get_children():
+		$DeadUnits.remove_child(deadUnit)
+
+func unitAtLocation(coord: Vector2) -> Unit:
+	for unit in $Units.get_children():
+		if coord == unit.tileLocation:
+			return unit
+	return null
+
+func dealDamageAtLocation(coord: Vector2, damage: int) -> bool:
+	var unit = unitAtLocation(coord)
+	if unit == null:
+		return false
+	unit.hit_points = unit.hit_points - damage
+	if unit.hit_points <= 0:
+		processUnitDeath(unit)
+		return true
+	return false
+		
+func processUnitDeath(unit: Unit) -> void:
+	unit.visible = false
+	$Units.remove_child(unit)
+	$DeadUnits.add_child(unit)
+	unit.onDeath()
 
 func createCity(coord: Vector2)-> void:
 	setTileBuilding(6, coord)
@@ -159,6 +183,7 @@ func spawnUnit(coord: Vector2, unitName: String, def: Dictionary, faction: int) 
 	var unit = template.instance()
 	$Units.add_child(unit)
 	unit.init(faction, UNIT_DEFINITIONS[unitName])
+	unit.onSpawn()
 	instantMoveUnitTo(unit, coord)
 
 func moveUnitOneStepCloserTo(unit: Unit, target: Vector2) -> bool:

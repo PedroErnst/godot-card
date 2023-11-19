@@ -20,7 +20,7 @@ func _ready() -> void:
 		cfc.game_rng_seed = CFUtils.generate_random_seed()
 		$SeedLabel.text = "Game Seed is: " + cfc.game_rng_seed
 	loadInitialCards()
-	$Counters.mod_counter("food", 1, true)
+	$Counters.mod_counter("food", 10, true)
 		
 	$TileRegister.setUp()
 	
@@ -31,6 +31,7 @@ func _ready() -> void:
 func endTurn() -> void:
 	if game_over:
 		return
+	playSound(FRO.SWITCH)
 	cfc.NMAP.hand.discardHand()
 	$TileRegister.endTurn()
 	if $TileRegister.allCitiesDestroyed():
@@ -141,3 +142,6 @@ func _on_DeckBuilder_hide() -> void:
 func _on_BackToMain_pressed() -> void:
 	cfc.quit_game()
 	get_tree().change_scene("res://src/custom/MainMenu.tscn")
+
+func playSound(key: int) -> void:
+	$Audio.playSound(key)

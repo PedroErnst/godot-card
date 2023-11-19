@@ -59,6 +59,11 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 				if available < required:
 					showError("Requires " + str(required) + " food")
 					return false
+			if ruleKey == "enemy_unit":
+				var unit = tiles.unitAtLocation(tilePos)
+				if unit == null || unit.faction != FRO.ENEMY:
+					showError("Must be targeted at an enemy")
+					return false
 			if ruleKey == "adyacent_to":
 				var adyacentType = definition.rules[ruleKey].type
 				var adyacentId = definition.rules[ruleKey].id
@@ -75,16 +80,17 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 	var adyacentTiles = tiles.getAdyacentTiles(tilePos)
 	var anyAdyacentExists = false
 	for adyacent in adyacentTiles:
-		if adyacent.terrain_type >= FRO.TERRAIN_NONE:
+		if adyacent.terrain_type != FRO.TERRAIN_NONE:
 			anyAdyacentExists = true
 			
-	if not anyAdyacentExists and tileAtLocation.terrain_type < 0:
+	if not anyAdyacentExists and tileAtLocation.terrain_type == FRO.TERRAIN_NONE:
 		showError("Must be adyacent to at least one other tile")
 		return false
 
 	return true
 	
 func showError(text: String)-> void:
+	cfc.NMAP.board.playSound(FRO.FAIL)
 	cfc.NMAP.board.get_node("Notification").showNotification(text, '', 3)
 	
 func placeTile(tilePos: Vector2) -> void:
@@ -93,6 +99,7 @@ func placeTile(tilePos: Vector2) -> void:
 	var tileAtLocation = tiles.getTileAt(tilePos)
 	if tileToPlace.layer == "terrain":
 		tiles.setTileTerrain(tileToPlace.type, tilePos)
+		cfc.NMAP.board.playSound(FRO.SWOOSH)
 		if "flora" in tileToPlace:
 			for key in tileToPlace.flora:
 				if rand_range(0, 100) < tileToPlace.flora[key]:
@@ -104,6 +111,8 @@ func placeTile(tilePos: Vector2) -> void:
 	elif tileToPlace.layer == "effect":
 		if "flora" in tileToPlace:
 			tiles.setTileFlora(tileToPlace.flora, tilePos)
+		if "damage" in tileToPlace:
+			tiles.dealDamageAtLocation(tilePos, tileToPlace["damage"])
 		if "grow_city" in tileToPlace:
 			var required = tiles.foodRequiredToGrowCityAt(tilePos)
 			counter.mod_counter('food', -required)

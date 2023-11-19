@@ -37,3 +37,7 @@ const BUILDING_WINDMILL = 8
 
 const FLORA_FOREST = 9 
 const FLORA_NONE = -1 
+
+const SWOOSH = 1
+const SWITCH = 2
+const FAIL = 3
