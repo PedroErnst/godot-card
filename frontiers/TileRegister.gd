@@ -23,7 +23,7 @@ var maxY = -999
 
 func allCitiesDestroyed() -> bool:
 	for coord in getTrackedCoords():
-		if getTileAt(coord).city_size > 0:
+		if not getTileAt(coord).hasCity():
 			return false
 	return true
 
@@ -45,6 +45,36 @@ func endTurn() -> void:
 					continue
 	for deadUnit in $DeadUnits.get_children():
 		$DeadUnits.remove_child(deadUnit)
+	autoSpawnTiles()
+
+func autoSpawnTiles() -> void:
+	for tileKey in register:
+		var tile = register[tileKey]
+		if not tile.hasCity():
+			continue
+		var bestTarget = null
+		var bestScore = -99
+		for coord in trackedCoords:
+			if Grid.tileDistance(coord, tile.location) > tile.city_size:
+				continue
+			var target = getTileAt(coord)
+			if target != null and target.terrain_type != FRO.TERRAIN_NONE:
+				continue
+			var score =  rand_range(0, 100)
+			if score > bestScore:
+				bestScore = score
+				bestTarget = target
+		if bestScore < 0:
+			continue
+		var options = []
+		options.append(FRO.TERRAIN_SPAWN_MIX[randi() % len(FRO.TERRAIN_SPAWN_MIX)])
+		for adyacent in getAdyacentTiles(bestTarget.location):
+			if adyacent.terrain_type != FRO.TERRAIN_NONE:
+				options.append(adyacent.terrain_type)
+		var chosen = options[randi() % len(options)]
+		setTileTerrain(chosen, bestTarget.location)
+		postTileReveal(bestTarget.location)
+	pass
 
 func unitAtLocation(coord: Vector2) -> Unit:
 	for unit in $Units.get_children():

@@ -15,6 +15,9 @@ func _init():
 	flora_type = FRO.FLORA_NONE
 	city_size = 0
 	location = Vector2(-1001.0,-1001.0)
+	
+func hasCity() -> bool:
+	return city_size > 0
 
 func newCity()-> void:
 	city_size = 1
