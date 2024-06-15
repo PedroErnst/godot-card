@@ -20,7 +20,8 @@ func _ready() -> void:
 		cfc.game_rng_seed = CFUtils.generate_random_seed()
 		$SeedLabel.text = "Game Seed is: " + cfc.game_rng_seed
 	loadInitialCards()
-	$Counters.mod_counter("food", 10, true)
+	$Counters.mod_counter("food", 20, true)
+	$Counters.mod_counter("wood", 20, true)
 		
 	$TileRegister.setUp()
 	

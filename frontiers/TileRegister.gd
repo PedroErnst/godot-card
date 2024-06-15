@@ -23,7 +23,7 @@ var maxY = -999
 
 func allCitiesDestroyed() -> bool:
 	for coord in getTrackedCoords():
-		if not getTileAt(coord).hasCity():
+		if getTileAt(coord).hasCity():
 			return false
 	return true
 
@@ -55,12 +55,13 @@ func autoSpawnTiles() -> void:
 		var bestTarget = null
 		var bestScore = -99
 		for coord in trackedCoords:
-			if Grid.tileDistance(coord, tile.location) > tile.city_size:
+			var dist = Grid.tileDistance(coord, tile.location)
+			if dist > tile.city_size or dist > 9:
 				continue
 			var target = getTileAt(coord)
 			if target != null and target.terrain_type != FRO.TERRAIN_NONE:
 				continue
-			var score =  rand_range(0, 100)
+			var score =  rand_range(0, 100 - (dist * 10))
 			if score > bestScore:
 				bestScore = score
 				bestTarget = target
@@ -73,6 +74,9 @@ func autoSpawnTiles() -> void:
 				options.append(adyacent.terrain_type)
 		var chosen = options[randi() % len(options)]
 		setTileTerrain(chosen, bestTarget.location)
+		if chosen in FRO.TERRAIN_FLORA_CHANCE:
+			if rand_range(0, 100) <= FRO.TERRAIN_FLORA_CHANCE[chosen]:
+				setTileFlora(FRO.FLORA_FOREST, bestTarget.location)
 		postTileReveal(bestTarget.location)
 	pass
 

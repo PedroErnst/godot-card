@@ -76,6 +76,18 @@ func tilePlacementValid(tilePos: Vector2, definition: Dictionary)-> bool:
 				if not hasMatchingAdyacent:
 					showError("Must be adyacent to a specific other tile")
 					return false
+			if ruleKey == "not_adyacent_to":
+				var adyacentType = definition.rules[ruleKey].type
+				var adyacentId = definition.rules[ruleKey].id
+				var hasMatchingAdyacent = false
+				for tile in tiles.getAdyacentTiles(tilePos):
+					if adyacentType == "building" and tile.building_type == adyacentId:
+						hasMatchingAdyacent = true
+					if adyacentType == "terrain" and tile.terrain_type == adyacentId:
+						hasMatchingAdyacent = true
+				if hasMatchingAdyacent:
+					showError("Must not be adyacent to a specific other tile")
+					return false
 	
 	var adyacentTiles = tiles.getAdyacentTiles(tilePos)
 	var anyAdyacentExists = false
@@ -100,14 +112,11 @@ func placeTile(tilePos: Vector2) -> void:
 	if tileToPlace.layer == "terrain":
 		tiles.setTileTerrain(tileToPlace.type, tilePos)
 		cfc.NMAP.board.playSound(FRO.SWOOSH)
-		if "flora" in tileToPlace:
-			for key in tileToPlace.flora:
-				if rand_range(0, 100) < tileToPlace.flora[key]:
-					tiles.setTileFlora(key, tilePos)
-					break
 		tiles.postTileReveal(tilePos)
 	elif tileToPlace.layer == "building":
 		tiles.setTileBuilding(tileToPlace.type, tilePos)
+	elif tileToPlace.layer == "city":
+		tiles.createCity(tilePos)
 	elif tileToPlace.layer == "effect":
 		if "flora" in tileToPlace:
 			tiles.setTileFlora(tileToPlace.flora, tilePos)

@@ -21,9 +21,6 @@ const CARDS := {
 				"rules": {
 					"terrain_type": FRO.TERRAIN_NONE,
 				},
-				"flora": {
-					FRO.FLORA_FOREST: 30
-				}
 			},
 			"costs": {
 				"credits": 1,
@@ -47,9 +44,6 @@ const CARDS := {
 				"rules": {
 					"terrain_type": FRO.TERRAIN_NONE,
 				},
-				"flora": {
-					FRO.FLORA_FOREST: 60
-				}
 			},
 			"costs": {
 				"credits": 1,
@@ -176,11 +170,33 @@ const CARDS := {
 		},
 	},
 	"Settler": {
-		"Tags": ["WIP"],
+		"Tags": ["Basic"],
 		"Requirements": "Must not be adyacent to another city.",
 		"Abilities": "Founds a city.",
+		"Starting Cards": 1,
 		"Cost": 2,
-		"Resources": "",
+		"Resources": "Wood: 10, Food: 10",
+		"script": {
+			"type": "place_tile",
+			"tile": {
+				"layer": "city",
+				"food_distance": true,
+				"name": "City",
+				"rules": {
+					"terrain_type": FRO.TERRAIN_GRASS,
+					"flora_type": FRO.FLORA_NONE,
+					"not_adyacent_to": {
+						"type": "building",
+						"id": FRO.BUILDING_CITY
+					},
+				},
+			},
+			"costs": {
+				"credits": 2,
+				"wood": 10,
+				"food": 10,
+			},
+		},
 	},
 	"Observatory": {
 		"Tags": ["WIP"],

@@ -26,10 +26,6 @@ static func tileCenter(pixelCoord: Vector2) -> Vector2:
 	return Vector2(pixelCoord.x + (FRO.TILE_SIZE_X / 2), pixelCoord.y + (FRO.TILE_SIZE_Y / 2))
 	
 static func coordWithinBounds(coord: Vector2) -> bool:
-	if coord.x < 0 or coord.x > FRO.MAP_LIMIT_X:
-		return false
-	if coord.y < 0 or coord.y > FRO.MAP_LIMIT_Y:
-		return false
 	return true
 	
 static func axial_to_oddq(hex: Vector2)-> Vector2:
